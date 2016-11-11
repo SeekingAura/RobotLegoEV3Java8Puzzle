@@ -370,7 +370,7 @@ public class FirstApp {
 		}
 		
 		
-			//volver a posición
+			//volver a posiciÃ³n
 		Delay.msDelay(3000);
 		moverRobot("arriba");//subir
 	}
@@ -396,7 +396,7 @@ public class FirstApp {
 		if(step>=6 && step<9){
 			tilestemp[2][step%3]=interpretarColor(sampleColor);
 		}
-		//volver a posición
+		//volver a posiciÃ³n
 		Delay.msDelay(5000);
 		moverRobot("arriba");//subir
 	}
