@@ -1,81 +1,60 @@
-
-
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-
-
-
 import java.util.ArrayList;
 import java.util.List;
 
-import lejos.hardware.BrickFinder;
-import lejos.hardware.lcd.GraphicsLCD;
-import lejos.utility.Delay;
-
-/**
- *
- * @author carlo
- */
 public class Board {
-    public int[][] goalState = {{ 1, 2, 3 }, { 4, 5, 6 }, { 7, 8, 9 }};//9 vacio
-    public int[][] tiles={{ 1, 2, 3 }, { 4, 5, 6 }, { 7, 8, 9 }};//9 vacio
-    public Board(int[][] tiles){// Toma una matriz 3x3 para formar 8-puzzle
+    public int[][] goalState = {{ 1, 2, 3 }, { 4, 5, 6 }, { 7, 8, 9 }};//state when end algoritm
+    public int[][] tiles={{ 1, 2, 3 }, { 4, 5, 6 }, { 7, 8, 9 }};//temp state to solve
+    public Board(int[][] tiles){// build board from matrix 3x3
         this.tiles=tiles;
     }
-    public Board(Board board){// Duplicar tablero
-        //int[][] nuevoTiles= {{ 1, 2, 3 }, { 4, 5, 6 }, { 7, 8, 9 }};
+    public Board(Board board){// build form board (clone)
         for(int f=0; f<3; f++){
             for(int c=0; c<3; c++){
                 this.tiles[f][c]=board.tiles[f][c];
             }
         }
     }
-
+    //Heuristic value from state board
     public int manhattan(){
-        int manhattan=0;
-        boolean encontrado=false;//Estableciendo estado de busqueda
-        //evaluando posición del 1
-        /**
-         * tablero 8-puzzle (3x3) evaluando el 1 partiendo de la siguiente forma; 
-         * siendo el # la posición solución para 1 y los números es la cantidad 
-         * de pasos de la solución en caso de que se encuentre en dicha posición 
-         * filaXcolumna (manhatan)
+        int manhattan=0;//initial value for distance (heuristic value)
+        boolean encontrado=false;//initial state for search
+        /*
+         * evaluate for value 1 
+         * # is the position where number 1 should be solution board, numbers are 
+         * amount of steps that need to get the solution position 
+         * rowX columnY (manhattan)
          * <pre>
          *  #12
          *  123
          *  234
          * </pre>
          */
-        if(this.tiles[0][0]==1){//caso de estar ubicado
+        if(this.tiles[0][0]==1){//case number 1 is in solution position
                 encontrado=true;
         }
         if(!encontrado){
             for(int f=0; f<3; f++){
                 for(int c=0; c<3; c++){
                     if(this.tiles[f][c]==1){
-                        //distancia de 1 paso a la casilla correcta
+                    	//distance for 1 step to solution position
                         if((f==1 && c==0) || (f==0 && c==1)){
                             manhattan=manhattan+1;
                             encontrado=true;
                             break;
                         }
-                        //distancia de 2 pasos a la casilla correcta
+                    	//distance for 2 steps to solution position
                         if((f==2 && c==0) || (f==1 && c==1) || (f==0 && c==2)){
                             manhattan=manhattan+2;
                             encontrado=true;
                             break;
                         }
-                        //distancia de 3 pasos a la casilla correcta
+                        //distance for 3 steps to solution position
                         if((f==2 && c==1) || (f==1 && c==2)){
                             manhattan=manhattan+3;
                             encontrado=true;
                             break;
                         }
-                        //distancia de 4 pasos a la casilla correcta
+                        //distance for 4 steps to solution position
                         if(f==2 && c==2){
                             manhattan=manhattan+4;
                             encontrado=true;
@@ -84,103 +63,94 @@ public class Board {
 
                     }
                 }
-                if(encontrado){//para no iterar mas sin necesidad
+                if(encontrado){//break loop when value 1 is found (Optimization)
                     break;
                 }
-            }
-            
-        }//fin de evaluando posición del 1
-        encontrado=false;//reinicnado estado de busqueda
-        
-        //evaluando posición del 2
-        /**
-         * tablero 8-puzzle (3x3) evaluando el 2 partiendo de la siguiente forma; 
-         * siendo el # la posición solución para 2 y los números es la cantidad 
-         * de pasos de la solución en caso de que se encuentre en dicha posición 
-         * filaXcolumna (manhatan)
+            }   
+        }
+        encontrado=false;//reset search state
+        /*
+         * evaluate for value 2
+         * # is the position where number 2 should be solution board, numbers are 
+         * amount of steps that need to get the solution position 
+         * rowX columnY (manhattan)
          * <pre>
          *  1#1
          *  212
          *  323
          * </pre>
          */
-        if(this.tiles[0][1]==2){//caso de estar bien ubicado
+        if(this.tiles[0][1]==2){//case number 2 is in solution position
             encontrado=true;
         }
         if(!encontrado){
             for(int f=0; f<3; f++){
                 for(int c=0; c<3; c++){
                     if(this.tiles[f][c]==2){
-                        //distancia de 1 paso a la casilla correcta
+                        //distance for 1 step to solution position
                         if((f==0 && c==0) || (f==1 && c==1) || (f==0 && c==2)){
                             manhattan=manhattan+1;
                             encontrado=true;
                             break;
                         }
-                        //distancia de 2 pasos a la casilla correcta
+                        //distance for 2 steps to solution position
                         if((f==1 && c==0) || (f==2 && c==1) || (f==1 && c==2)){
                             manhattan=manhattan+2;
                             encontrado=true;
                             break;
                         }
-                        //distancia de 3 pasos a la casilla correcta
+                        //distance for 3 steps to solution position
                         if((f==2 && c==0) || (f==2 && c==2)){
                             manhattan=manhattan+3;
                             encontrado=true;
                             break;
                         }
-
-
                     }
-                }//fin columnas
-                if(encontrado){//para no iterar mas sin necesidad
+                }
+                if(encontrado){//break loop when value 2 is found (Optimization)
                     break;
                 }
-            }//fin filas
+            }
         }
-        encontrado=false;//reinicnado estado de busqueda
+        encontrado=false;//reset search state
         
-        //evaluando posición del 3
-        /**
-        * tablero 8-puzzle (3x3) evaluando el 3 partiendo de la siguiente forma; 
-        * siendo el # la posición solución para 3 y los números es la cantidad 
-        * de pasos de la solución en caso de que se encuentre en dicha posición 
-        * filaXcolumna (manhatan)
-        * <pre>
-        *  21#
-        *  321
-        *  432
-        * </pre>
-        */
-        if(this.tiles[0][2]==3){//caso de estar bien ubicado
+		/*
+		 * evaluate for value 3
+		 * # is the position where number 3 should be solution board, numbers are 
+		 * amount of steps that need to get the solution position 
+		 * rowX columnY (manhattan)
+		 * <pre>
+		 *  21#
+		 *  321
+		 *  432
+		 * </pre>
+		 */
+        if(this.tiles[0][2]==3){//case number 3 is in solution position
             encontrado=true;
         }
         if(!encontrado){
             for(int f=0; f<3; f++){
-                if(this.tiles[0][2]==3){//caso de estar bien ubicado
-                        break;
-                }
                 for(int c=0; c<3; c++){
                     if(this.tiles[f][c]==3){
-                        //distancia de 1 paso a la casilla correcta
+                        //distance for 1 step to solution position
                         if((f==0 && c==1) || (f==1 && c==2)){
                             manhattan=manhattan+1;
                             encontrado=true;
                             break;
                         }
-                        //distancia de 2 pasos a la casilla correcta
+                        //distance for 2 steps to solution position
                         if((f==0 && c==0) || (f==1 && c==1) || (f==2 && c==2)){
                             manhattan=manhattan+2;
                             encontrado=true;
                             break;
                         }
-                        //distancia de 3 pasos a la casilla correcta
+                        //distance for 3 steps to solution position
                         if((f==1 && c==0) || (f==2 && c==1)){
                             manhattan=manhattan+3;
                             encontrado=true;
                             break;
                         }
-                        //distancia de 4 pasos a la casilla correcta
+                        //distance for 4 steps to solution position
                         if((f==2 && c==0)){
                             manhattan=manhattan+4;
                             encontrado=true;
@@ -189,88 +159,85 @@ public class Board {
 
 
                     }
-                }//fin columnas
-                if(encontrado){//para no iterar mas sin necesidad
+                }
+                if(encontrado){//break loop when value 3 is found (Optimization)
                     break;
                 }
-            }//fin filas
+            }
         }
         
-        encontrado=false;//reinicnado estado de busqueda
+        encontrado=false;//reset search state
         
-        //evaluando posición del 4
-        /**
-        * tablero 8-puzzle (3x3) evaluando el 4 partiendo de la siguiente forma; 
-        * siendo el # la posición solución para 4 y los números es la cantidad 
-        * de pasos de la solución en caso de que se encuentre en dicha posición 
-        * filaXcolumna (manhatan)
-        * <pre>
-        *  123
-        *  #12
-        *  123
-        * </pre>
-        */
-        if(this.tiles[1][0]==4){//caso de estar bien ubicado
+		/*
+		 * evaluate for value 4
+		 * # is the position where number 4 should be solution board, numbers are 
+		 * amount of steps that need to get the solution position 
+		 * rowX columnY (manhattan)
+         * <pre>
+         *  123
+         *  #12
+         *  123
+         * </pre>
+         */
+        if(this.tiles[1][0]==4){//case number 4 is in solution position
             encontrado=true;
         }
         if(!encontrado){
             for(int f=0; f<3; f++){
                 for(int c=0; c<3; c++){
                     if(this.tiles[f][c]==4){
-                        //distancia de 1 paso a la casilla correcta
+                        //distance for 1 step to solution position
                         if((f==0 && c==0) || (f==2 && c==0) || (f==1 && c==1)){
                             manhattan=manhattan+1;
                             encontrado=true;
                             break;
                         }
-                        //distancia de 2 pasos a la casilla correcta
+                        //distance for 2 steps to solution position
                         if((f==0 && c==1) || (f==2 && c==1) || (f==1 && c==2)){
                             manhattan=manhattan+2;
                             encontrado=true;
                             break;
                         }
-                        //distancia de 3 pasos a la casilla correcta
+                        //distance for 3 steps to solution position
                         if((f==0 && c==2) || (f==2 && c==2)){
                             manhattan=manhattan+3;
                             encontrado=true;
                             break;
                         }
                     }
-                }//fin columnas
-                if(encontrado){//para no iterar mas sin necesidad
+                }
+                if(encontrado){//break loop when value 4 is found (Optimization)
                     break;
                 }
-            }//fin filas
+            }
         }
-        encontrado=false;//reinicnado estado de busqueda
-        
-        //evaluando posición del 5
-        /**
-        * tablero 8-puzzle (3x3) evaluando el 5 partiendo de la siguiente forma; 
-        * siendo el # la posición solución para 5 y los números es la cantidad 
-        * de pasos de la solución en caso de que se encuentre en dicha posición 
-        * filaXcolumna (manhatan)
-        * <pre>
-        *  212
-        *  1#1
-        *  212
-        * </pre>
-        */
-        if(this.tiles[1][1]==5){//caso de estar bien ubicado
+        encontrado=false;//reset search state
+		/* 
+		 * evaluate for value 5
+		 * # is the position where number 5 should be solution board, numbers are 
+		 * amount of steps that need to get the solution position 
+		 * rowX columnY (manhattan)
+         * <pre>
+         *  212
+         *  1#1
+         *  212
+         * </pre>
+         */
+        if(this.tiles[1][1]==5){//case number 5 is in solution position
             encontrado=true;
         }
         if(!encontrado){
             for(int f=0; f<3; f++){
                 for(int c=0; c<3; c++){
                     if(this.tiles[f][c]==5){
-                        //distancia de 1 paso a la casilla correcta
+                        //distance for 1 step to solution position
                         if((f==1 && c==0) || (f==0 && c==1) || (f==2 && c==1) || 
                                 (f==1 && c==2)){
                             manhattan=manhattan+1;
                             encontrado=true;
                             break;
                         }
-                        //distancia de 2 pasos a la casilla correcta
+                        //distance for 2 steps to solution position
                         if((f==0 && c==0) || (f==2 && c==0) || (f==0 && c==2) || 
                                 (f==2 && c==2)){
                             manhattan=manhattan+2;
@@ -279,47 +246,45 @@ public class Board {
                         }
 
                     }
-                }//fin columnas
-                if(encontrado){//para no iterar mas sin necesidad
+                }
+                if(encontrado){//break loop when value 5 is found (Optimization)
                     break;
                 }
-            }//fin filas
+            }
         }
         
-        encontrado=false;//reinicnado estado de busqueda
-        
-        //evaluando posición del 6
-        /**
-        * tablero 8-puzzle (3x3) evaluando el 6 partiendo de la siguiente forma; 
-        * siendo el # la posición solución para 6 y los números es la cantidad 
-        * de pasos de la solución en caso de que se encuentre en dicha posición 
-        * filaXcolumna (manhatan)
-        * <pre>
-        *  321
-        *  21#
-        *  321
-        * </pre>
-        */
-        if(this.tiles[1][2]==6){//caso de estar bien ubicado
+        encontrado=false;//reset search state
+		/* 
+		 * evaluate for value 6
+		 * # is the position where number 6 should be solution board, numbers are 
+		 * amount of steps that need to get the solution position 
+		 * rowX columnY (manhattan)
+         * <pre>
+         *  321
+         *  21#
+         *  321
+         * </pre>
+         */
+        if(this.tiles[1][2]==6){//case number 6 is in solution position
             encontrado=true;
         }
         if(!encontrado){
             for(int f=0; f<3; f++){
                 for(int c=0; c<3; c++){
                     if(this.tiles[f][c]==6){
-                        //distancia de 1 paso a la casilla correcta
+                        //distance for 1 step to solution position
                         if((f==1 && c==1) || (f==0 && c==2) || (f==2 && c==2)){
                             manhattan=manhattan+1;
                             encontrado=true;
                             break;
                         }
-                        //distancia de 2 pasos a la casilla correcta
+                        //distance for 2 steps to solution position
                         if((f==1 && c==0) || (f==0 && c==1) || (f==2 && c==1)){
                             manhattan=manhattan+2;
                             encontrado=true;
                             break;
                         }
-                        //distancia de 3 pasos a la casilla correcta
+                        //distance for 3 steps to solution position
                         if((f==0 && c==0) || (f==2 && c==0)){
                             manhattan=manhattan+3;
                             encontrado=true;
@@ -327,52 +292,50 @@ public class Board {
                         }
 
                     }
-                }//fin columnas
-                if(encontrado){//para no iterar mas sin necesidad
+                }
+                if(encontrado){//break loop when value 6 is found (Optimization)
                     break;
                 }
-            }//fin filas
+            }
         }
-        encontrado=false;//reinicnado estado de busqueda
-        
-        //evaluando posición del 7
-        /**
-        * tablero 8-puzzle (3x3) evaluando el 7 partiendo de la siguiente forma; 
-        * siendo el # la posición solución para 7 y los números es la cantidad 
-        * de pasos de la solución en caso de que se encuentre en dicha posición 
-        * filaXcolumna (manhatan)
-        * <pre>
-        *  234
-        *  123
-        *  #12
-        * </pre>
-        */
-        if(this.tiles[2][0]==7){//caso de estar bien ubicado
+        encontrado=false;//reset search state
+		/* 
+		 * evaluate for value 7
+		 * # is the position where number 7 should be solution board, numbers are 
+		 * amount of steps that need to get the solution position 
+		 * rowX columnY (manhattan)
+         * <pre>
+         *  234
+         *  123
+         *  #12
+         * </pre>
+         */
+        if(this.tiles[2][0]==7){//case number 7 is in solution position
             encontrado=false;
         }
         if(!encontrado){
             for(int f=0; f<3; f++){
                 for(int c=0; c<3; c++){
                     if(this.tiles[f][c]==7){
-                        //distancia de 1 paso a la casilla correcta
+                        //distance for 1 step to solution position
                         if((f==1 && c==1) || (f==2 && c==1)){
                             manhattan=manhattan+1;
                             encontrado=true;
                             break;
                         }
-                        //distancia de 2 pasos a la casilla correcta
+                        //distance for 2 steps to solution position
                         if((f==0 && c==0) || (f==1 && c==1) || (f==2 && c==2)){
                             manhattan=manhattan+2;
                             encontrado=true;
                             break;
                         }
-                        //distancia de 3 pasos a la casilla correcta
+                        //distance for 3 steps to solution position
                         if((f==0 && c==1) || (f==1 && c==2)){
                             manhattan=manhattan+3;
                             encontrado=true;
                             break;
                         }
-                        //distancia de 3 pasos a la casilla correcta
+                        //distance for 4 steps to solution position
                         if(f==0 && c==2){
                             manhattan=manhattan+4;
                             encontrado=true;
@@ -380,63 +343,58 @@ public class Board {
                         }
 
                     }
-                }//fin columnas
-                if(encontrado){//para no iterar mas sin necesidad
+                }
+                if(encontrado){//break loop when value 7 is found (Optimization)
                     break;
                 }
-            }//fin filas
+            }
         }
-        encontrado=false;//reinicnado estado de busqueda
-        
-        //evaluando posición del 8
-        /**
-        * tablero 8-puzzle (3x3) evaluando el 8 partiendo de la siguiente forma; 
-        * siendo el # la posición solución para 8 y los números es la cantidad 
-        * de pasos de la solución en caso de que se encuentre en dicha posición 
-        * filaXcolumna (manhatan)
+        encontrado=false;//reset search state
+		/* 
+		 * evaluate for value 8
+		 * # is the position where number 8 should be solution board, numbers are 
+		 * amount of steps that need to get the solution position 
+		 * rowX columnY (manhattan)
         * <pre>
-        *  234
-        *  123
-        *  #12
+        *  323
+        *  212
+        *  1#1
         * </pre>
         */
-        if(this.tiles[2][1]==8){//caso de estar bien ubicado
+        if(this.tiles[2][1]==8){//case number 8 is in solution position
             encontrado=true;
         }
         if(!encontrado){
             for(int f=0; f<3; f++){
                 for(int c=0; c<3; c++){
                     if(this.tiles[f][c]==8){
-                        //distancia de 1 paso a la casilla correcta
+                        //distance for 1 step to solution position
                         if((f==2 && c==0) || (f==1 && c==1) || (f==2 && c==2)){
                             manhattan=manhattan+1;
                             encontrado=true;
                             break;
                         }
-                        //distancia de 2 pasos a la casilla correcta
+                        //distance for 2 steps to solution position
                         if((f==1 && c==0) || (f==0 && c==1) || (f==2 && c==2)){
                             manhattan=manhattan+2;
                             encontrado=true;
                             break;
                         }
-                        //distancia de 3 pasos a la casilla correcta
+                        //distance for 3 steps to solution position
                         if((f==0 && c==0) || (f==0 && c==2)){
                             manhattan=manhattan+3;
                             encontrado=true;
                             break;
                         }
                     }
-                }//fin columnas
-                if(encontrado){//para no iterar mas sin necesidad
+                }
+                if(encontrado){//break loop when value 8 is found (Optimization)
                     break;
                 }
-            }//fin filas
+            }
         }
-        return manhattan;
-        
-        
-        
-    }             // return sum of Manhattan distances between blocks and goal
+        return manhattan;   
+    }// return sum of Manhattan distances between blocks and solution
     
     
     

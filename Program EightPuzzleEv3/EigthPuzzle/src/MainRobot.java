@@ -1,98 +1,91 @@
-
-import java.io.IOException;
+//library of java
 import java.util.List;
 
+//library of LEGO lejos
 import lejos.hardware.BrickFinder;
-import lejos.hardware.Button;
 import lejos.hardware.lcd.GraphicsLCD;
 import lejos.hardware.motor.EV3LargeRegulatedMotor;
 import lejos.hardware.motor.EV3MediumRegulatedMotor;
-import lejos.hardware.motor.Motor;
 import lejos.hardware.port.MotorPort;
 import lejos.hardware.port.SensorPort;
-import lejos.remote.ev3.RemoteRequestEV3;
-import lejos.robotics.Color;
 import lejos.robotics.RegulatedMotor;
 import lejos.utility.Delay;
 import lejos.hardware.lcd.Font;
-import lejos.hardware.Device;
 import lejos.hardware.Keys;
 import lejos.hardware.ev3.EV3;
-import lejos.hardware.sensor.BaseSensor;
 import lejos.hardware.sensor.EV3ColorSensor;
-import lejos.hardware.sensor.EV3IRSensor;
-import lejos.hardware.sensor.AnalogSensor;
 import lejos.hardware.sensor.EV3TouchSensor;
 import lejos.hardware.sensor.SensorMode;
 
 public class MainRobot {
+	//motors (control about robot movements)
+	//Movement Y
 	public static RegulatedMotor m4 = new EV3LargeRegulatedMotor(MotorPort.D);
+	//Movement X (Rotate)
 	public static RegulatedMotor m3 = new EV3LargeRegulatedMotor(MotorPort.C);
-	
+	//claw
 	public static RegulatedMotor m2 = new EV3MediumRegulatedMotor(MotorPort.B);
 	
-	public static EV3ColorSensor colorSensor = new EV3ColorSensor(SensorPort.S4); 
+	//Sensors (way that robot can read and set physical puzzle on memory)
+	public static EV3ColorSensor colorSensor = new EV3ColorSensor(SensorPort.S4);
 	public static SensorMode color = colorSensor.getRGBMode();
-	public static boolean tengoObjeto = false;
-	public static EV3 ev3 = (EV3) BrickFinder.getLocal(); 
+	
+	//Instance of Brick (unit control of robot)
+	public static EV3 ev3 = (EV3) BrickFinder.getLocal();
+	//Instance buttons from brick
 	public static Keys keys = ev3.getKeys();
-	public static int posActual=0;
+	//Instance Display
 	public static GraphicsLCD g = BrickFinder.getDefault().getGraphicsLCD();
-	public static int[][] vacio= {{0, 0, 0}, {0, 0, 0}, { 0, 0, 0}};//9 vacio;
+	
+	//control values
+	public static boolean tengoObjeto = false;
+	public static int posActual=0;
+	public static int[][] vacio= {{0, 0, 0}, {0, 0, 0}, { 0, 0, 0}};//Clean board
+	//initial puzzle object
 	public static Board puzz = new Board(vacio);
 	
 	 
 	public static void main(String[] args) {
-		
-		/*
-		//Declarando IR Sensor (Control inflarojo)
-		EV3IRSensor sensorIR = new EV3IRSensor(SensorPort.S2);
-		byte[] commands = new byte[EV3IRSensor.IR_CHANNELS];
-		float[] distances = new float[sensorIR.sampleSize()];
-		*/
-		//Declarando Touch sensor (botton naranja)
+		//Button sensor (limit about negative rotate X)
 		EV3TouchSensor touchSensor = new EV3TouchSensor(SensorPort.S1);
 		SensorMode touch = touchSensor.getTouchMode();
 		float[] sampleTouch= new float[touch.sampleSize()];
-		//touch.fetchSample(sample, 0);
-		//sampleTouch[0]==0 //presionado
-		
-		
-		
-		
-		int key, button;
-		
-		
+
+		int key;
+		//set max speed and acceleration (interval speed change in time)
 		m4.setAcceleration(275);
 		m4.setSpeed(200);
 		
 		m3.setAcceleration(112);
 		m3.setSpeed(75);
-		
+		//claw
 		m2.setAcceleration(450);
 		m2.setSpeed(300);
 		
-		moverRobot("arriba");//subir
+		//set robot in initial position (start in position that can take items)
+		moverRobot("arriba");//a good distance up
 		Delay.msDelay(3000);
-		m2.rotate(70);//cerrar
+		//set claw in initial position
+		m2.rotate(70);//close claw
 		Delay.msDelay(2000);
-		moverRobot("abrir");//abrir
+		moverRobot("abrir");//open claw
 		
+		//move right until touchsensor is pressed (limit in positive X)
 		while(sampleTouch[0]==0){
 			m3.rotate(5, true);
 			touch.fetchSample(sampleTouch, 0);
-			
 		}
-		
-		m3.rotate(-21, true);//ubicar primer bloque
+		//first cell of board-puzzle (when touch button limit positive X)
+		m3.rotate(-21, true);
 		Delay.msDelay(2000);
-		//
 		
+		//values initial state puzzle
 		int pos=0;
-		posActual=1;
+		posActual=1;//cell position
 		Graph gx = new Graph();
 		List<Integer> actions;
 		do{
+			//print Menu
 			System.out.println("EightPuzzle-Menu");
 			System.out.println("Up-Leer");
 			System.out.println("Down-Imprimir");
@@ -101,20 +94,20 @@ public class MainRobot {
 			System.out.println("Back-Salir");
 			key=keys.waitForAnyEvent();
 			
-			if(key==1){
-				puzz.tiles=leerTablero();
+			if(key==1){//Button Up
+				puzz.tiles=leerTablero();//read all board
 			}
-			if(key==4){
-				imprimirTablero();
+			if(key==4){//Button Down
+				imprimirTablero();//print current board (memory)
 			}
-			if(key==16){
+			if(key==16){//Button Left
 				System.out.println("---Indique posicion---");
 				pos=1;
 				
-				while(key!=2){
+				while(key!=2){//waiting for receive position (end with middle button)
 					System.out.println("posicion "+pos);
 					key=keys.waitForAnyEvent();
-					if(key==16){
+					if(key==16){//Button Left
 						if((pos-1)<1){
 							pos=1;
 						}else{
@@ -130,18 +123,18 @@ public class MainRobot {
 					}
 					
 				}
-				irPos(pos);
+				irPos(pos);//go to position
 				Delay.msDelay(5000);
-				actionLeer(posActual-1, puzz.tiles);
-				keys.waitForAnyPress();
+				actionLeer(posActual-1, puzz.tiles);//read current position (postActual-1=step position)
+				keys.waitForAnyPress();//back to menu when any button is pressed
 			}
-			if(key==8){
-				if(puzz.isSolvable()){
-					gx=puzz.TreeSolution();
-					actions=gx.chainActions();
-					for(int i=0; i<actions.size(); i++){
+			if(key==8){//Button Right
+				if(puzz.isSolvable()){//check possible solver
+					gx=puzz.TreeSolution();//build solution tree
+					actions=gx.chainActions();//take actions to solve
+					for(int i=0; i<actions.size(); i++){//do actions
 						moverTablero(actions.get(i));
-						if(keys.waitForAnyEvent(5000)==1){
+						if(keys.waitForAnyEvent(5000)==1){//any button pressed for stop
 							System.out.println("<---------->");
 							System.out.println("Abortado");
 							System.out.println("<---------->");
@@ -150,31 +143,43 @@ public class MainRobot {
 						}
 					}
 				}else{
-					
 					System.out.println("<---------->");
 					System.out.println("No es solucionable ");
 					System.out.println("<---------->");
-					keys.waitForAnyPress();
+					keys.waitForAnyPress();//back to menu when any key is pressed
 				}
 				
 				
 			}
-		}while(key!=32);
+		}while(key!=32);//Button Back to end program
 		
 		}
 		
-	public static int range_right = 0;
-	public static int range_left = 0;
-	private static void irPos(int x){
+	/*
+	 * Board positions
+	 * <pre>
+     *  123
+     *  456
+     *  789
+     * </pre> 
+	 */
+	private static void irPos(int x){//move robot in position 1 to 9
+		/*
+		 * number of moves should be do for go to position
+		 * Negative value is right movement (see matrix how vector 123456789 if go 5 to 9
+		 * input for moverRobot is -4)
+		 * Positive value is Left movement see matrix how vector 123456789 if go 7 to 2
+		 * input for moverRobot is 5)
+		 */
 		moverRobot(posActual-x);
 		posActual=x;
 		
 	}
-	//todo movimiento dado del tablero se da apartir de donde esta el vacio
+	//move board with value movement reference point is empty cell (value 9, this cell moves)
 	private static void moverTablero(int movimiento){
 		int posVacio=1;
 		boolean encontrado=false;
-		for(int fila=0; fila<3; fila++){
+		for(int fila=0; fila<3; fila++){//try to find empty cell (value 9)
 			for(int columna=0; columna<3; columna++){
 				 if(puzz.tiles[fila][columna]==9){
 					 encontrado=true;
@@ -183,13 +188,22 @@ public class MainRobot {
 					 posVacio++;
 				 }
 			}
-			if(encontrado){
+			if(encontrado){//end loop when empty cell is found
 				 break;
 			 }
 		}
 		System.out.println("pos vacio-"+posVacio);
 		
-		//Arriba
+		//Case Move up
+		/*
+		 * <pre>
+         *  ###
+         *  X&&
+         *  *##
+         * </pre>
+		 * up is 3 left movement (if see matrix how vector ###X&&*## 
+		 * where && moves, X pos objetive, * start position (empty cell) 
+		 */
 		if(movimiento==0){
 			System.out.println("accion-Arriba");
 			irPos(posVacio-3);
@@ -200,7 +214,16 @@ public class MainRobot {
 			Delay.msDelay(5000);
 			moverRobot("soltar");
 		}
-		//Derecha
+		//Case Move Right
+		/*
+		 * <pre>
+         *  ###
+         *  *X#
+         *  ###
+         * </pre>
+		 * right is 1 right movement (if see matrix how vector ###*X#### 
+		 * where X pos objetive, * start position (empty cell) 
+		 */
 		if(movimiento==1){
 			System.out.println("accion-Derecha");
 			irPos(posVacio+1);
@@ -212,7 +235,16 @@ public class MainRobot {
 			moverRobot("soltar");
 			
 		}
-		//Abajo
+		//Case Move Down
+		/*
+		 * <pre>
+         *  ##*
+         *  &&X
+         *  ###
+         * </pre>
+		 * down is 3 right movement (if see matrix how vector ##*&&X### 
+		 * where & moves, X pos objetive, * start position (empty cell) 
+		 */
 		if(movimiento==2){
 			System.out.println("accion-Abajo");
 			irPos(posVacio+3);
@@ -223,7 +255,16 @@ public class MainRobot {
 			Delay.msDelay(5000);
 			moverRobot("soltar");
 		}
-		//Izquierda
+		//Case Move Left
+		/*
+		 * <pre>
+         *  ###
+         *  X*#
+         *  ###
+         * </pre>
+		 * Left is 1 movement left (if see matrix how vector ###X*#### 
+		 * where X pos objetive, * start position (empty cell) 
+		 */
 		if(movimiento==3){
 			System.out.println("accion-Izquierda");
 			irPos(posVacio-1);
@@ -235,35 +276,31 @@ public class MainRobot {
 			moverRobot("soltar");
 			
 		}
-		puzz.moveBoard(movimiento);
-		imprimirTablero();
+		puzz.moveBoard(movimiento);//Update in memory the board when end movement
+		imprimirTablero();//print updated board
 	}
 	private static void imprimirTablero(){
-		//System.out.println("<------->");
-	    String x="";
-	    String x1="";
-	    String x2="";
-	    //char k = (char)34;
-	    //x=x.concat(Character.toString(k));
+	    String x="";//row 0
+	    String x1="";//row 1
+	    String x2="";//row 2
 	    for(int f=0; f<3; f++){
-	        //System.out.print("   ");
 	        
 	        for(int c=0; c<3; c++){
-	        	if(f==0){
+	        	if(f==0){//case row 0
 	        		if(puzz.tiles[f][c]==9){
 		                x=x.concat("_");
 		            }else{
 		                x=x.concat(""+puzz.tiles[f][c]);
 		            }
 	        	}
-	        	if(f==1){
+	        	if(f==1){//case row 1
 	        		if(puzz.tiles[f][c]==9){
 		                x1=x1.concat("_");
 		            }else{
 		                x1=x1.concat(""+puzz.tiles[f][c]);
 		            }
 	        	}
-	        	if(f==2){
+	        	if(f==2){//case row 2
 	        		if(puzz.tiles[f][c]==9){
 		                x2=x2.concat("_");
 		            }else{
@@ -273,13 +310,10 @@ public class MainRobot {
 	            
 	        }
 	        
-	        //System.out.println("");
+	        
 	    }
-	    //k = (char)34;
-	    //x=x.concat(Character.toString(k));
-	    //System.out.println(GraphicsLCD.VCENTER | GraphicsLCD.LEFT);
-	    //System.out.println(Font.getLargeFont());
 	    
+	    //clean Brick Display
 	    System.out.println("");
 	    System.out.println("");
 	    System.out.println("");
@@ -304,81 +338,57 @@ public class MainRobot {
 	    g.drawString(x2, 55, 90, GraphicsLCD.VCENTER | GraphicsLCD.LEFT);
 	    g.refresh();
 	    Delay.msDelay(5000);
-		//keys.waitForAnyPress();
+		//keys.waitForAnyPress();//wait when end movement until button is pressed
 		g.clear();
 	}
-	private static void moverRobot(String sentido, int bloques) {
-		if(sentido=="izquierda"){//left
-			m3.rotate(-30*bloques, true);
-			//range_left -= 20;
-		}
-		if(sentido=="derecha"){//right
-			m3.rotate(30*bloques, true);
-			//range_right += 20;
-		}
-		
-	}
+	/*
+	 * Rotate robot (Movement X) with number of cell's (bloques) that move 
+	 * positive value is Right move, negative value is Left
+	 */
 	private static void moverRobot(int bloques) {
 		m3.rotate(30*bloques, true);
-	
 	}
+	
 	private static void moverRobot(String sentido) {
 		if(sentido=="arriba"){//up
-			m4.rotate(-240, true);
-			//range_left -= 20;
-		}
-		if(sentido=="arribaIni"){//up
-			m4.rotate(-285, true);
-			//range_left -= 20;
+			m4.rotate(-265, true);
 		}
 		if(sentido=="abajo"){//down
-			m4.rotate(240, true);
-			//range_right += 20;
+			m4.rotate(265, true);
 		}
-		if(sentido=="cerrar"){//agarrar
+		if(sentido=="cerrar"){//close claw
 			m2.rotate(70, true);
 		}
-		if(sentido=="abrir"){//Soltar
+		if(sentido=="abrir"){//open claw
 			m2.rotate(-70);
 		}
 		
-		if(sentido=="tomar"){//down
-			m4.rotate(265, true);//abajo
+		if(sentido=="tomar"){//take cell
+			moverRobot("abajo");
 			Delay.msDelay(5000);
-			m2.rotate(70, true);//cerrar
-			Delay.msDelay(5000);
-			m4.rotate(-265, true);//subir
-		}
-		if(sentido=="soltar"){//down
-			m4.rotate(265, true);//abajo
-			Delay.msDelay(5000);
-			m2.rotate(-70);//abrir
-			Delay.msDelay(5000);
-			m4.rotate(-265, true);//subir
-		}
-		
-	}
-	private static void actionGarraActual(boolean x) {
-		tengoObjeto=x;
-		//mover
-		moverRobot("abajo");//bajar
-		Delay.msDelay(3000);
-		
-		if(x){
 			moverRobot("cerrar");
-		}else{
-			moverRobot("abrir");
+			Delay.msDelay(5000);
+			moverRobot("arriba");
 		}
-		
-		
-			//volver a posición
-		Delay.msDelay(3000);
-		moverRobot("arriba");//subir
+		if(sentido=="soltar"){//drop cell
+			moverRobot("abajo");
+			Delay.msDelay(5000);
+			moverRobot("abrir");
+			Delay.msDelay(5000);
+			moverRobot("arriba");
+		}
 	}
-	
-	private static void actionLeer(int step, int[][] tilestemp) {
-		//Declarando Color sensor (sensor de color)
-		moverRobot("abajo");//bajar
+	/*
+	 * step positions
+	 * <pre>
+     *  012
+     *  345
+     *  678
+     * </pre> 
+	 * Read color and replace value of tilestemp in step position see how vector 012345678
+	 */
+	private static void actionLeer(int step, int[][] tilestemp){
+		moverRobot("abajo");//down
 		Delay.msDelay(5000);
 		float[] sampleColor = new float[color.sampleSize()]; 
 		color.fetchSample(sampleColor, 0);
@@ -387,88 +397,134 @@ public class MainRobot {
 		System.out.println("G-"+sampleColor[1]);
 		System.out.println("B-"+sampleColor[2]);
 		System.out.println("Reflecting-"+isReflecting(sampleColor));
-		if(step<3){
+		if(step<3){//in row 0
 			tilestemp[0][step]=interpretarColor(sampleColor);
 		}
 		
-		if(step>=3 && step<6){
+		if(step>=3 && step<6){//in row 1
 			tilestemp[1][step%3]=interpretarColor(sampleColor);
 		}
-		if(step>=6 && step<9){
+		if(step>=6 && step<9){//in row 2
 			tilestemp[2][step%3]=interpretarColor(sampleColor);
 		}
-		//volver a posición
+		//back to up position
 		Delay.msDelay(5000);
 		moverRobot("arriba");//subir
 	}
+	/*
+	 * Color decoder (range in RGB values)
+	 * every time that robot is start need calibration values (test read)
+	 * because values depends of environment (illumination), position of cell, 
+	 * cell material (reflective) 
+	 * 
+	 */
 	private static int interpretarColor(float[] colorRGB) {
-		//caso para negro
-		//0,0147																0,0117											0,0088	
-		//0,0258																0,0176											0,0147
-		if(colorRGB[0]>=(0.006) && colorRGB[0]<=(0.0260) && colorRGB[1]>=(0.0090) && colorRGB[1]<=(0.0180) && colorRGB[2]>=(0.0060) && colorRGB[2]<=(0.0150)){
+		/*
+		 * Case Black
+		 * 0.0260 >= R >= 0.0060
+		 * 0.0180 >= G >= 0.0090
+		 * 0.0060 >= B >= 0.0150
+		 * isReflecting = True or False
+		 */
+		if(colorRGB[0]>=(0.0060) && colorRGB[0]<=(0.0260) && colorRGB[1]>=(0.0090) && colorRGB[1]<=(0.0180) && colorRGB[2]>=(0.0060) && colorRGB[2]<=(0.0150)){
 			System.out.println("Negro-1");
 			return 1;
 		}
-		//caso para Verde	
-		//0,0205																0,0539												0,0196	
-		//0,0343																0,0921												0,0343
+		/*
+		 * Case Green
+		 * 0.0190 >= R >= 0.0360
+		 * 0.0520 >= G >= 0.0930
+		 * 0.0190 >= B >= 0.0350
+		 * isReflecting = True
+		 */
 		if(isReflecting(colorRGB) && colorRGB[0]>=(0.0190) && colorRGB[0]<=(0.0360) && colorRGB[1]>=(0.0520) && colorRGB[1]<=(0.0930) && colorRGB[2]>=(0.0190) && colorRGB[2]<=(0.0350)){
 			System.out.println("Verde-2");
 			return 2;
 		}
-		//caso para Azul
-		//0,0196														0,0558												0,0626	
-		//0,02941														0,1009												0,1245
+		/*
+		 * Case Blue
+		 * 0.0300 >= R >= 0.0190
+		 * 0.1010 >= G >= 0.0540
+		 * 0.1250 >= B >= 0.0600
+		 * isReflectiong = True
+		 */
 		if(isReflecting(colorRGB) && colorRGB[0]>=(0.0190) && colorRGB[0]<=(0.0300) && colorRGB[1]>=(0.0540) && colorRGB[1]<=(0.1010) && colorRGB[2]>=(0.0600) && colorRGB[2]<=(0.1250)){
 			System.out.println("Azul-3");
 			return 3;
 		}
-		//caso para Blanco
-		//0,0872															0,0823											0,0745	
-		//0,2068															0,1970											0,1539
+		/*
+		 * Case White
+		 * 0.2100 >= R >= 0.0860
+		 * 0.2000 >= G >= 0.0810
+		 * 0.1555 >= B >= 0.0730
+		 * isReflecting = True
+		 */
 		if(isReflecting(colorRGB) && colorRGB[0]>=(0.0860) && colorRGB[0]<=(0.2100) && colorRGB[1]>=(0.0810) && colorRGB[1]<=(0.2000) && colorRGB[2]>=(0.0730) && colorRGB[2]<=(0.1555)){
 			System.out.println("Blanco-4");
 			return 4;
 		}
-		//caso para cafe
-		//0,045															    0,0294												0,0147	
-		//0,0953															0,0550												0,0314
-		if(isReflecting(colorRGB) && colorRGB[0]>=(0.040) && colorRGB[0]<=(0.0960) && colorRGB[1]>=(0.0200) && colorRGB[1]<=(0.0530) && colorRGB[2]>=(0.0100) && colorRGB[2]<=(0.0320)){
+		/*
+		 * Case Brown
+		 * 0.0960 >= R >= 0.0400
+		 * 0.0530 >= G >= 0.0200
+		 * 0.0320 >= B >= 0.0100
+		 * isReflecting = True
+		 */
+		if(isReflecting(colorRGB) && colorRGB[0]>=(0.0400) && colorRGB[0]<=(0.0960) && colorRGB[1]>=(0.0200) && colorRGB[1]<=(0.0530) && colorRGB[2]>=(0.0100) && colorRGB[2]<=(0.0320)){
 			System.out.println("Cafe-5");
 			return 5;
 		}
-		//caso para Amarillo
-		//0,0980																0,0774												0,0166	
-		//0,2333																0,1666												0,0343
+		/*
+		 * Case Yellow
+		 * 0.2340 >= R >= 0.0980
+		 * 0.1670 >= G >= 0.0750
+		 * 0.0350 >= B >= 0.0150
+		 * isReflecting = True
+		 */
 		if(isReflecting(colorRGB) && colorRGB[0]>=(0.0980) && colorRGB[0]<=(0.2340) && colorRGB[1]>=(0.0750) && colorRGB[1]<=(0.1670) && colorRGB[2]>=(0.0150) && colorRGB[2]<=(0.0350)){
 			System.out.println("Amarillo-6");
 			return 6;
 		}
-		//caso para Magenta
-		//0,1174																0,0548													0,0627	
-		//0,1911																0,0784													0,0911
+		/*
+		 * Case Magenta
+		 * 0.2000 >= R >= 0.1260
+		 * 0.0810 >= G >= 0.0540
+		 * 0.0930 >= B >= 0.0500
+		 * isReflecting = True
+		 */
 		if(isReflecting(colorRGB) && colorRGB[0]>=(0.1260) && colorRGB[0]<=(0.2000) && colorRGB[1]>=(0.0540) && colorRGB[1]<=(0.0810) && colorRGB[2]>=(0.0500) && colorRGB[2]<=(0.0930)){
 			System.out.println("Magenta-7");
 			return 7;
 		}
-		//caso para Rojo
-		//0,1156															0,0284											0,0186	
-		//0,2696															0,0529											0,0294
+		/*
+		 * Case Red
+		 * 0.2710 >= R >= 0.1140
+		 * 0.0540 >= G >= 0.0270
+		 * 0.0310 >= B >= 0.0180
+		 * isReflecting = True
+		 */
 		if(isReflecting(colorRGB) && colorRGB[0]>=(0.1140) && colorRGB[0]<=(0.2710) && colorRGB[1]>=(0.0270) && colorRGB[1]<=(0.0540) && colorRGB[2]>=(0.0180) && colorRGB[2]<=(0.0310)){
 			System.out.println("Rojo-8");
 			return 8;
 		}
-		//caso para vacio
+		/*
+		 * Case Empty (cell None)
+		 * isReflecting = False
+		 */
 		if(!isReflecting(colorRGB)){
 			System.out.println("Vacio-9");
 			return 9;
 		}
-		return 9;
-		
+		return 9;//Others take empty value (out range)
 	}
-	private static boolean isReflecting(float[] colorSample) {
-		return colorSample[0]>0.015||colorSample[1]>0.015||colorSample[2]>0.015;
+
+	//Reflecting report if read some item or empty (value R or G or B >0.015)
+	private static boolean isReflecting(float[] sampleColor) {
+		return sampleColor[0]>0.015||sampleColor[1]>0.015||sampleColor[2]>0.015;
 	}
+	/*
+     * read all board and return
+	 */
 	private static int[][] leerTablero(){
 		int[][] tilestemp= {{0, 0, 0}, {0, 0, 0}, { 0, 0, 0}};//9 vacio;
 		for(int i=0; i<9; i++){
@@ -480,13 +536,7 @@ public class MainRobot {
 				break;
 			}
 			actionLeer((i), tilestemp);
-			
-			
 		}
-		
 		return tilestemp;
 	}
-	
-	
-	
 }

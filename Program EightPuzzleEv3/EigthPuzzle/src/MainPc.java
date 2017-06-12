@@ -1,27 +1,17 @@
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-
-import lejos.hardware.BrickFinder;
-import lejos.hardware.lcd.GraphicsLCD;
-import lejos.hardware.motor.EV3LargeRegulatedMotor;
-import lejos.hardware.motor.Motor;
-import lejos.hardware.port.MotorPort;
-import lejos.hardware.port.SensorPort;
-import lejos.remote.ev3.RemoteRequestEV3;
-import lejos.robotics.RegulatedMotor;
-import lejos.utility.Delay;
-import lejos.hardware.lcd.Font;
-import lejos.hardware.Device;
-import lejos.hardware.sensor.BaseSensor;
-import lejos.hardware.sensor.AnalogSensor;
-import lejos.hardware.sensor.EV3TouchSensor;
-import lejos.hardware.sensor.SensorMode;
 
 public class MainPc {
 	public static void main(String[] args) {
-		int[][] tiles= {{ 1, 9, 3 }, { 7, 2, 6 }, { 5, 4, 8 }};//9 vacio;
+		/*
+		 * Board
+		 * <pre>
+	     *  193
+	     *  726
+	     *  548
+	     * </pre>
+		 */
+		int[][] tiles= {{ 1, 9, 3 }, { 7, 2, 6 }, { 5, 4, 8 }};//9 is empty cell;
 	       
 	       Board puzz = new Board(tiles);       
 	       List<Integer> actions;
@@ -29,23 +19,15 @@ public class MainPc {
 	       
 	       Graph gx = new Graph();
 	       
-	       if(puzz.isSolvable()){
-	    	   gx=puzz.TreeSolution();
-	    	   actions=gx.chainActions();
-		       actions2=gx.showActions(actions);
-		       //gx.printDOT();
-		       System.out.println(actions2);
+	       if(puzz.isSolvable()){//check if is possible to get a solution
+	    	   gx=puzz.TreeSolution();//build solution tree
+	    	   actions=gx.chainActions();//actions to do (numbers)
+		       actions2=gx.showActions(actions);//actions to do (literal)
+		       System.out.println("Actions (number values) "+actions);
+		       System.out.println("Actions (literal values) "+actions2);
+		       //gx.printDOT();//print Tree with DOT format
+		       
 	       }
-	       
-	       //System.out.println(actions);
-	       //Delay.msDelay(5000);
-	       
-	       //Delay.msDelay(5000);
-	       //puzz.displayRobot();
-	       gx.printDOT();
-		
-		
-		
 		}
 
 	
