@@ -158,10 +158,10 @@ public class MainRobot {
 	/*
 	 * Board positions
 	 * <pre>
-     *  123
-     *  456
-     *  789
-     * </pre> 
+	 *  123
+	 *  456
+	 *  789
+	 * </pre> 
 	 */
 	private static void irPos(int x){//move robot in position 1 to 9
 		/*
@@ -197,10 +197,10 @@ public class MainRobot {
 		//Case Move up
 		/*
 		 * <pre>
-         *  ###
-         *  X&&
-         *  *##
-         * </pre>
+		 * ###
+		 * X&&
+		 * *##
+		 * </pre>
 		 * up is 3 left movement (if see matrix how vector ###X&&*## 
 		 * where && moves, X pos objetive, * start position (empty cell) 
 		 */
@@ -217,10 +217,10 @@ public class MainRobot {
 		//Case Move Right
 		/*
 		 * <pre>
-         *  ###
-         *  *X#
-         *  ###
-         * </pre>
+		 * ###
+		 * *X#
+		 * ###
+		 * </pre>
 		 * right is 1 right movement (if see matrix how vector ###*X#### 
 		 * where X pos objetive, * start position (empty cell) 
 		 */
@@ -238,9 +238,9 @@ public class MainRobot {
 		//Case Move Down
 		/*
 		 * <pre>
-         *  ##*
-         *  &&X
-         *  ###
+		 * ##*
+		 * &&X
+		 * ###
          * </pre>
 		 * down is 3 right movement (if see matrix how vector ##*&&X### 
 		 * where & moves, X pos objetive, * start position (empty cell) 
@@ -258,9 +258,9 @@ public class MainRobot {
 		//Case Move Left
 		/*
 		 * <pre>
-         *  ###
-         *  X*#
-         *  ###
+		 * ###
+		 * X*#
+		 * ###
          * </pre>
 		 * Left is 1 movement left (if see matrix how vector ###X*#### 
 		 * where X pos objetive, * start position (empty cell) 
@@ -381,10 +381,10 @@ public class MainRobot {
 	/*
 	 * step positions
 	 * <pre>
-     *  012
-     *  345
-     *  678
-     * </pre> 
+	 * 012
+	 * 345
+	 * 678
+	 * </pre> 
 	 * Read color and replace value of tilestemp in step position see how vector 012345678
 	 */
 	private static void actionLeer(int step, int[][] tilestemp){

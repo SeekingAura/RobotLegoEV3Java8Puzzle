@@ -6,10 +6,10 @@ public class MainPc {
 		/*
 		 * Board
 		 * <pre>
-	     *  193
-	     *  726
-	     *  548
-	     * </pre>
+		 * 193
+		 * 726
+		 * 548
+		 * </pre>
 		 */
 		int[][] tiles= {{ 1, 9, 3 }, { 7, 2, 6 }, { 5, 4, 8 }};//9 is empty cell;
 	       

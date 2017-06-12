@@ -24,9 +24,9 @@ public class Board {
          * amount of steps that need to get the solution position 
          * rowX columnY (manhattan)
          * <pre>
-         *  #12
-         *  123
-         *  234
+         * #12
+         * 123
+         * 234
          * </pre>
          */
         if(this.tiles[0][0]==1){//case number 1 is in solution position
@@ -75,9 +75,9 @@ public class Board {
          * amount of steps that need to get the solution position 
          * rowX columnY (manhattan)
          * <pre>
-         *  1#1
-         *  212
-         *  323
+         * 1#1
+         * 212
+         * 323
          * </pre>
          */
         if(this.tiles[0][1]==2){//case number 2 is in solution position
@@ -113,18 +113,17 @@ public class Board {
             }
         }
         encontrado=false;//reset search state
-        
-		/*
-		 * evaluate for value 3
-		 * # is the position where number 3 should be solution board, numbers are 
-		 * amount of steps that need to get the solution position 
-		 * rowX columnY (manhattan)
-		 * <pre>
-		 *  21#
-		 *  321
-		 *  432
-		 * </pre>
-		 */
+        /*
+         * evaluate for value 3
+         * # is the position where number 3 should be solution board, numbers are 
+         * amount of steps that need to get the solution position 
+         * rowX columnY (manhattan)
+         * <pre>
+         * 21#
+         * 321
+         * 432
+         * </pre>
+         */
         if(this.tiles[0][2]==3){//case number 3 is in solution position
             encontrado=true;
         }
@@ -168,15 +167,15 @@ public class Board {
         
         encontrado=false;//reset search state
         
-		/*
-		 * evaluate for value 4
-		 * # is the position where number 4 should be solution board, numbers are 
-		 * amount of steps that need to get the solution position 
-		 * rowX columnY (manhattan)
+        /*
+         * evaluate for value 4
+         * # is the position where number 4 should be solution board, numbers are 
+         * amount of steps that need to get the solution position 
+         * rowX columnY (manhattan)
          * <pre>
-         *  123
-         *  #12
-         *  123
+         * 123
+         * #12
+         * 123
          * </pre>
          */
         if(this.tiles[1][0]==4){//case number 4 is in solution position
@@ -212,15 +211,15 @@ public class Board {
             }
         }
         encontrado=false;//reset search state
-		/* 
-		 * evaluate for value 5
-		 * # is the position where number 5 should be solution board, numbers are 
-		 * amount of steps that need to get the solution position 
-		 * rowX columnY (manhattan)
+        /*
+         * evaluate for value 5
+         * # is the position where number 5 should be solution board, numbers are 
+         * amount of steps that need to get the solution position 
+         * rowX columnY (manhattan)
          * <pre>
-         *  212
-         *  1#1
-         *  212
+         * 212
+         * 1#1
+         * 212
          * </pre>
          */
         if(this.tiles[1][1]==5){//case number 5 is in solution position
@@ -254,15 +253,15 @@ public class Board {
         }
         
         encontrado=false;//reset search state
-		/* 
-		 * evaluate for value 6
-		 * # is the position where number 6 should be solution board, numbers are 
-		 * amount of steps that need to get the solution position 
-		 * rowX columnY (manhattan)
+        /*
+         * evaluate for value 6
+         * # is the position where number 6 should be solution board, numbers are 
+         * amount of steps that need to get the solution position 
+         * rowX columnY (manhattan)
          * <pre>
-         *  321
-         *  21#
-         *  321
+         * 321
+         * 21#
+         * 321
          * </pre>
          */
         if(this.tiles[1][2]==6){//case number 6 is in solution position
@@ -299,15 +298,15 @@ public class Board {
             }
         }
         encontrado=false;//reset search state
-		/* 
-		 * evaluate for value 7
-		 * # is the position where number 7 should be solution board, numbers are 
-		 * amount of steps that need to get the solution position 
-		 * rowX columnY (manhattan)
+        /*
+         * evaluate for value 7
+         * # is the position where number 7 should be solution board, numbers are 
+         * amount of steps that need to get the solution position 
+         * rowX columnY (manhattan)
          * <pre>
-         *  234
-         *  123
-         *  #12
+         * 234
+         * 123
+         * #12
          * </pre>
          */
         if(this.tiles[2][0]==7){//case number 7 is in solution position
@@ -350,17 +349,17 @@ public class Board {
             }
         }
         encontrado=false;//reset search state
-		/* 
-		 * evaluate for value 8
-		 * # is the position where number 8 should be solution board, numbers are 
-		 * amount of steps that need to get the solution position 
-		 * rowX columnY (manhattan)
-        * <pre>
-        *  323
-        *  212
-        *  1#1
-        * </pre>
-        */
+        /*
+         * evaluate for value 8
+         * # is the position where number 8 should be solution board, numbers are 
+         * amount of steps that need to get the solution position 
+         * rowX columnY (manhattan)
+         * <pre>
+         * 323
+         * 212
+         * 1#1
+         * </pre>
+         */
         if(this.tiles[2][1]==8){//case number 8 is in solution position
             encontrado=true;
         }
