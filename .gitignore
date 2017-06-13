@@ -15,6 +15,17 @@ local.properties
 .classpath
 .settings/
 .loadpath
+*.tis
+*.fnm
+*.fdx
+*.json
+*.gen
+Program EightPuzzleEv3/.recommenders/index/http___download_eclipse_org_recommenders_models_mars_/segments_1
+*.fdt
+*.nrm
+*.prx
+*.tii
+*.frq
 
 # External tool builders
 .externalToolBuilders/

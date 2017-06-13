@@ -23,9 +23,9 @@ public class MainPc {
 	    	   gx=puzz.TreeSolution();//build solution tree
 	    	   actions=gx.chainActions();//actions to do (numbers)
 		       actions2=gx.showActions(actions);//actions to do (literal)
-		       System.out.println("Actions (number values) "+actions);
-		       System.out.println("Actions (literal values) "+actions2);
-		       //gx.printDOT();//Export the graph in DOT format.
+		       //System.out.println("Actions (number values) "+actions);
+		       //System.out.println("Actions (literal values) "+actions2);
+		       gx.printDOT();//Export the graph in DOT format.
 		       
 	       }
 		}

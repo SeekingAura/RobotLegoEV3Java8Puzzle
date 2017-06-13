@@ -57,9 +57,11 @@ public class Graph {
         }
         while(true){//add to action value and go to parent node until parent null (tree head)
             if(temp.parent==null){
+            	temp.isStepSolution=true;//set head node how part of solution (for method printDOT)
                 break;
             }
             actions.add(temp.action);
+            temp.isStepSolution=true;//set node how part of solution (for method printDOT)
             temp=temp.parent;
         }
         /*
@@ -96,12 +98,50 @@ public class Graph {
      * Visit http://www.webgraphviz.com/ to visualize it.
      */
     public void printDOT(){
-        System.out.println("graph ethane {");
-	for(Edge e : this.edges){
-		System.out.print("\t"+e.start.value.toString()+" -- "+e.end.value.toString());
-    	System.out.println(";");
-    }
-	System.out.println("}");
+    	int nodeNum=1;
+    	List<String> content= new ArrayList<String>();
+		for(Node n : this.nodes){//set num node
+			n.num=nodeNum;
+			nodeNum++;
+	    }
+		for(Node n : this.nodes){
+			for(Edge e : n.salientes){
+				if(e.start.isStepSolution){
+					if(!content.contains("n"+e.start.num+" [fontname="+(char)34+"times-bold"+(char)34+", label="+e.start.value.toString()+", style=bold];")){
+						content.add("n"+e.start.num+" [fontname="+(char)34+"times-bold"+(char)34+", label="+e.start.value.toString()+", style=bold];");
+					}
+				}else{
+					if(!content.contains("n"+e.start.num+" [label="+e.start.value.toString()+"];")){
+						content.add("n"+e.start.num+" [label="+e.start.value.toString()+"];");
+					}
+				}
+				if(e.end.isStepSolution){
+					if(!content.contains("n"+e.end.num+" [fontname="+(char)34+"times-bold"+(char)34+", label="+e.end.value.toString()+", style=bold];")){
+						content.add("n"+e.end.num+" [fontname="+(char)34+"times-bold"+(char)34+", label="+e.end.value.toString()+", style=bold];");
+					}
+				}else{
+					if(!content.contains("n"+e.end.num+" [label="+e.end.value.toString()+"];")){
+						content.add("n"+e.end.num+" [label="+e.end.value.toString()+"];");
+					}
+				}
+				if(e.start.isStepSolution && e.end.isStepSolution){
+					if(!content.contains("n"+e.start.num+" -> "+"n"+e.end.num+" [style=bold];")){
+						content.add("n"+e.start.num+" -> "+"n"+e.end.num+" [style=bold];");
+					}
+				}else{
+					if(!content.contains("n"+e.start.num+" -> "+"n"+e.end.num+";")){
+						content.add("n"+e.start.num+" -> "+"n"+e.end.num+";");
+					}
+				}
+			}
+		}
+		System.out.println("digraph Board {");
+	    System.out.println("node [color=black, shape=circle];");
+	    System.out.println("edge [arrowhead=none];");
+	    for(String value : content){
+	    	System.out.println(value);
+	    }
+		System.out.println("}");
     }
     
 

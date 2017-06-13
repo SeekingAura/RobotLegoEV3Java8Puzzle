@@ -549,7 +549,7 @@ public class Board {
     	 * add all and...
     	 * 7+6+5+4+3+1=26 -> if result is even is solvable
     	 */
-    	List<Integer> linealTablero= new ArrayList<Integer>();;
+    	List<Integer> linealTablero= new ArrayList<Integer>();
     	for(int i=0; i<3; i++){
     		for(int j=0; j<3; j++){
     			linealTablero.add(this.tiles[i][j]);//take board how vector
@@ -586,13 +586,10 @@ public class Board {
     }
     @Override
     public String toString(){// print representation of the board
-        //System.out.println("<------->");
         String x="";
         char k = (char)34;
         x=x.concat(Character.toString(k));
         for(int f=0; f<3; f++){
-            //System.out.print("   ");
-            
             for(int c=0; c<3; c++){
                 if(this.tiles[f][c]==9){
                     x=x.concat("_");
@@ -604,12 +601,9 @@ public class Board {
                 k = (char)92;
                 x=x.concat(Character.toString(k)+"n");
             }
-            
-            //System.out.println("");
         }
         k = (char)34;
         x=x.concat(Character.toString(k));
-        //System.out.println("<------->");
         return x;
     }
     //compare input board with actual board (object memory) is iqual
