@@ -397,20 +397,30 @@ public class Board {
     
     
     
-    public void moveBoard(int move){/*mueve dado un tablero 
-        *y retona la movida de ese tablero sin modificar el que se lleva en memoria
-        *movimientos apartir de la posición del vacío (9) y se desplaza hacia 
-        *ese lado el vacío (9)
-        *0-Arriba
-        *1-Derecha
-        *2-Abajo
-        *3-Izquierda
-        */
-        int fila=-1;
-        int columna=-1;
-        int temp=0;//dato temporal para hacer "swap"
-        if(move==0){
-            for(int f=0; f<3; f++){
+    public void moveBoard(int move){
+    	/*
+    	 * move board (memory) wit move (decoded with number)
+    	 * 0-Up
+    	 * 1-Right
+    	 * 2-Down
+    	 * 3-Left
+    	 * that moves is the empty cell example
+    	 * <pre>
+    	 * 123
+    	 * 456
+    	 * 789
+    	 * </pre>
+    	 * number 9 is empty cell if do up result this board
+    	 * <pre>
+    	 * 123
+    	 * 459
+    	 * 786
+    	 */
+        int fila=-1;//initial value for row
+        int columna=-1;//initial value for column
+        int temp=0;//temp value to swap
+        if(move==0){//Case up
+            for(int f=0; f<3; f++){//search empty cell
                 for(int c=0; c<3; c++){
                     if(this.tiles[f][c]==9){
                         fila=f;
@@ -418,22 +428,22 @@ public class Board {
                         break;
                     }
                 }
-                if(fila!=-1){
+                if(fila!=-1){//when found empty cell break (optimization)
                     break;
                 }
             }
             
-            if(fila==0){
+            if(fila==0){//in arrow 0 can't do movement up
                 //System.out.println("No es posible realizar acción arriba");
                 return;
             }
-            temp=this.tiles[fila-1][columna];
-            this.tiles[fila-1][columna]=9;
-            this.tiles[fila][columna]=temp;
+            temp=this.tiles[fila-1][columna];//value to move
+            this.tiles[fila-1][columna]=9;//replace where empty cell end when do move
+            this.tiles[fila][columna]=temp;//replace value to move in last position empty cell (before move)
             return;
         }
-        if(move==1){
-            for(int f=0; f<3; f++){
+        if(move==1){//Case right
+            for(int f=0; f<3; f++){//search empty cell
                 for(int c=0; c<3; c++){
                     if(this.tiles[f][c]==9){
                         fila=f;
@@ -441,22 +451,22 @@ public class Board {
                         break;
                     }
                 }
-                if(fila!=-1){
+                if(fila!=-1){//when found empty cell break (optimization)
                     break;
                 }
             }
             
-            if(columna==2){
+            if(columna==2){//in column 2 can't do movement right
                 //System.out.println("No es posible realizar acción derecha");
                 return;
             }
-            temp=this.tiles[fila][columna+1];
-            this.tiles[fila][columna+1]=9;
-            this.tiles[fila][columna]=temp;
+            temp=this.tiles[fila][columna+1];//value to move
+            this.tiles[fila][columna+1]=9;//replace where empty cell end when do move
+            this.tiles[fila][columna]=temp;//replace value to move in last position empty cell (before move)
             return;
         }
-        if(move==2){
-            for(int f=0; f<3; f++){
+        if(move==2){//Case Down
+            for(int f=0; f<3; f++){//search empty cell
                 for(int c=0; c<3; c++){
                     if(this.tiles[f][c]==9){
                         fila=f;
@@ -464,22 +474,22 @@ public class Board {
                         break;
                     }
                 }
-                if(fila!=-1){
+                if(fila!=-1){//when found empty cell break (optimization)
                     break;
                 }
             }
             
-            if(fila==2){
+            if(fila==2){//in row 2 can't do movement right
                 //System.out.println("No es posible realizar acción abajo");
                 return;
             }
-            temp=this.tiles[fila+1][columna];
-            this.tiles[fila+1][columna]=9;
-            this.tiles[fila][columna]=temp;
+            temp=this.tiles[fila+1][columna];//value to move
+            this.tiles[fila+1][columna]=9;//replace where empty cell end when do move
+            this.tiles[fila][columna]=temp;//replace value to move in last position empty cell (before move)
             return;
         }
-        if(move==3){
-            for(int f=0; f<3; f++){
+        if(move==3){//Case Left
+            for(int f=0; f<3; f++){//search empty cell
                 for(int c=0; c<3; c++){
                     if(this.tiles[f][c]==9){
                         fila=f;
@@ -487,44 +497,79 @@ public class Board {
                         break;
                     }
                 }
-                if(fila!=-1){
+                if(fila!=-1){//when found empty cell break (optimization)
                     break;
                 }
             }
             
-            if(columna==0){
+            if(columna==0){//in row 2 can't do movement right
                 //System.out.println("No es posible realizar acción izquierda");
                 return;
             }
-            temp=this.tiles[fila][columna-1];
-            this.tiles[fila][columna-1]=9;
-            this.tiles[fila][columna]=temp;
+            temp=this.tiles[fila][columna-1];//value to move
+            this.tiles[fila][columna-1]=9;//replace where empty cell end when do move
+            this.tiles[fila][columna]=temp;//replace value to move in last position empty cell (before move)
             return;
         }        
     }
 	
     public boolean isSolvable(){
+    	/*
+    	 * check if is possible to solve example
+    	 * in board
+    	 * <pre>
+    	 * 123
+    	 * 459
+    	 * 786
+    	 * </pre>
+    	 * take how vector 123459786, take every number and check if
+    	 * value is greater than next positions except 9 (empty cell) and plus one
+    	 * Case 1
+    	 * check 2, 3, 4 ,5, 7, 8, 6
+    	 * all greater -> plus 7
+    	 * Case 2
+    	 * check 3, 4, 5, 7, 8, 6
+    	 * all greater -> plus 6
+    	 * Case 3
+    	 * check 4, 5, 7, 8, 6
+    	 * all greater plus 5
+    	 * Case 4
+    	 * check 5, 7, 8, 6
+    	 * all greater plus 4
+    	 * Case 5
+    	 * check 7, 8, 6
+    	 * all greater plus 3
+    	 * Case 7
+    	 * check 8, 6
+    	 * 8>7 -> is greater plus 1
+    	 * 7>6 -> not greater
+    	 * Case 8
+    	 * check 6
+    	 * 8>6 -> not greater
+    	 * add all and...
+    	 * 7+6+5+4+3+1=26 -> if result is even is solvable
+    	 */
     	List<Integer> linealTablero= new ArrayList<Integer>();;
     	for(int i=0; i<3; i++){
     		for(int j=0; j<3; j++){
-    			linealTablero.add(this.tiles[i][j]);
+    			linealTablero.add(this.tiles[i][j]);//take board how vector
     		}
     	}
-    	int temp=0;
-    	int cantidad=0;
+    	int temp=0;//temp value to check greater
+    	int cantidad=0;//initial result value
     	for(int i=0; i<linealTablero.size(); i++){
     		temp=linealTablero.get(i);
-    		for(int j=i+1; j<linealTablero.size(); j++){
+    		for(int j=i+1; j<linealTablero.size(); j++){//check the next values to temp value except empty
     			if(linealTablero.get(j)<temp && linealTablero.get(j)!=9 && temp!=9){
     				cantidad++;
     			}
     		}
     	}
     	//System.out.println(cantidad);
-    	return cantidad%2==0;
+    	return cantidad%2==0;//result even return true if not even return false
     }
 	
-    public void toPrint(){// pring representation of the board
+    public void toPrint(){// print representation of the board
         System.out.println("<------->");
         for(int f=0; f<3; f++){
             System.out.print("   ");
@@ -540,7 +585,7 @@ public class Board {
         System.out.println("<------->");
     }
     @Override
-    public String toString(){// pring representation of the board
+    public String toString(){// print representation of the board
         //System.out.println("<------->");
         String x="";
         char k = (char)34;
@@ -567,6 +612,7 @@ public class Board {
         //System.out.println("<------->");
         return x;
     }
+    //compare input board with actual board (object memory) is iqual
     public boolean isIqual(Board x){
         for(int f=0; f<3; f++){
             for(int c=0; c<3; c++){
@@ -577,6 +623,7 @@ public class Board {
         }
         return true;
     }
+  //compare solution board with actual board (object memory) is ready
     public boolean isGoal(){
         for(int f=0; f<3; f++){
             for(int c=0; c<3; c++){
@@ -587,40 +634,37 @@ public class Board {
         }
         return true;
     }
-    public Graph TreeSolution(){// find a solution to the initial board
-        Graph g = new Graph();
-        Node puzzNode = new Node(this);
-        g.addNode(puzzNode);
+    public Graph TreeSolution(){// make a solution tree from initial board
+        Graph g = new Graph();//new graph
+        Node puzzNode = new Node(this);//first node (tree head, initial state)
+        g.addNode(puzzNode);//add first node
         int paso=0;
         while(true){
-            puzzNode.expanded=true;
+            puzzNode.expanded=true;//set state in current node
             g.expand(puzzNode);
-            int costecamino=Integer.MAX_VALUE;//infinito
+            int costecamino=Integer.MAX_VALUE;//infinite value
             for(Node n : g.nodes){
-                if(!n.expanded){
+                if(!n.expanded){//check in all nodes min path cost value (heristic+steps)
                     //n.value.toPrint();
                     if(costecamino>(n.caminoCost+n.heuristicavalue)){
                         costecamino=n.caminoCost+n.heuristicavalue;
                     }
                 }
             }
-            for(Node n : g.nodes){
+            for(Node n : g.nodes){//check in tree is already solution and return tree
                 if(n.value.isGoal()){
 					System.out.println("pasos hechos "+paso);
                     return g;
                 }
             }
-            for(Node n : g.nodes){
+            for(Node n : g.nodes){//find node that not expanded with min value heuristic+steps
                 if(costecamino==(n.caminoCost+n.heuristicavalue) && !n.expanded){
-                    //System.out.println("--------------------------------------------");
-                    //n.value.toPrint();
                     puzzNode=n;
                     break;
                 }
             }
             paso++;
         }
-        //return g;
         
     }
 

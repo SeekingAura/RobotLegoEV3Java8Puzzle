@@ -25,7 +25,7 @@ public class MainPc {
 		       actions2=gx.showActions(actions);//actions to do (literal)
 		       System.out.println("Actions (number values) "+actions);
 		       System.out.println("Actions (literal values) "+actions2);
-		       //gx.printDOT();//print Tree with DOT format
+		       //gx.printDOT();//Export the graph in DOT format.
 		       
 	       }
 		}
