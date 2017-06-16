@@ -130,7 +130,7 @@ public class MainRobot {
 			}
 			if(key==8){//Button Right
 				if(puzz.isSolvable()){//check possible solver
-					gx=puzz.TreeSolution();//build solution tree
+					gx=puzz.TreeSolution("manhattan");//build solution tree
 					actions=gx.chainActions();//take actions to solve
 					for(int i=0; i<actions.size(); i++){//do actions
 						moverTablero(actions.get(i));

@@ -20,12 +20,13 @@ local.properties
 *.fdx
 *.json
 *.gen
-Program EightPuzzleEv3/.recommenders/index/http___download_eclipse_org_recommenders_models_mars_/segments_1
+Program EightPuzzleEv3/.recommenders/
 *.fdt
 *.nrm
 *.prx
 *.tii
 *.frq
+*.lock
 
 # External tool builders
 .externalToolBuilders/
@@ -225,3 +226,4 @@ pip-log.txt
 
 #Mr Developer
 .mr.developer.cfg
+

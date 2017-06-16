@@ -1,9 +1,11 @@
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Board {
     public int[][] goalState = {{ 1, 2, 3 }, { 4, 5, 6 }, { 7, 8, 9 }};//state when end algoritm
     public int[][] tiles={{ 1, 2, 3 }, { 4, 5, 6 }, { 7, 8, 9 }};//temp state to solve
+	private boolean add;
     public Board(int[][] tiles){// build board from matrix 3x3
         this.tiles=tiles;
     }
@@ -395,6 +397,23 @@ public class Board {
         return manhattan;   
     }// return sum of Manhattan distances between blocks and solution
     
+    /*
+     * hamming add 1 for every cell (different to empty cell) that not in solution position 
+     *
+     */
+    public int hamming(){
+    	int hamming=0;
+    	for(int f=0; f<3; f++){
+    		for(int c=0; c<3; c++){
+    			if(this.tiles[f][c]!=this.goalState[f][c]){
+    				hamming++;
+    			}
+    			
+    		}
+    	}
+    	return hamming;
+    }
+        
     
     
     public void moveBoard(int move){
@@ -628,11 +647,15 @@ public class Board {
         }
         return true;
     }
-    public Graph TreeSolution(){// make a solution tree from initial board
-        Graph g = new Graph();//new graph
+    /*
+     * make a solution tree from initial board using a Heuristic that input
+     * if input a heuristic that not define this not use a heuristic value and do a amplitude search
+     */
+    public Graph TreeSolution(String Heuristica){
+        Graph g = new Graph(Heuristica);//new graph
         Node puzzNode = new Node(this);//first node (tree head, initial state)
         g.addNode(puzzNode);//add first node
-        int paso=0;
+        int expandido=0;
         while(true){
             puzzNode.expanded=true;//set state in current node
             g.expand(puzzNode);
@@ -647,7 +670,7 @@ public class Board {
             }
             for(Node n : g.nodes){//check in tree is already solution and return tree
                 if(n.value.isGoal()){
-					System.out.println("pasos hechos "+paso);
+					//System.out.println("veces expandido "+expandido);
                     return g;
                 }
             }
@@ -657,9 +680,8 @@ public class Board {
                     break;
                 }
             }
-            paso++;
+            expandido++;
         }
-        
     }
 
 }

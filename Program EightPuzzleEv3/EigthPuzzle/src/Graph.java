@@ -6,11 +6,15 @@ import java.util.List;
 public class Graph {
     public ArrayList<Node> nodes = new ArrayList<Node>();
     public ArrayList<Edge> edges = new ArrayList<Edge>();
+    public String Heuristica="";//define that heuristic to use
+    public boolean goalFound=false;
     public Graph(){
     }
-    
+    public Graph(String Heuristica){
+    	this.Heuristica=Heuristica;
+    }
     public void addNode(Board value){
-        Node x = new Node(value);
+        Node x = new Node(value, this.Heuristica);
         this.nodes.add(x);
     }
     public void addNode(Node x){
@@ -35,18 +39,18 @@ public class Graph {
                     }
                 }
                 if(!existe){//only expand if dont exist on tree the new board state
-                    Node hijo = new Node(temp);
+                    Node hijo = new Node(temp, this.Heuristica);
                     hijo.parent=base;
                     hijo.action=i;
                     hijo.expanded=false;
                     hijo.caminoCost=base.caminoCost+1;
                     this.addNode(hijo);
                     this.addDirectedEdge(base, hijo);
-                }    
-                
+                }
             }
         }
     }
+   
     public List<Integer> chainActions(){
         Node temp = null;
         List<Integer> actions = new ArrayList<Integer>();
