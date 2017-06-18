@@ -1,0 +1,52 @@
+#Book - Frontiers in Artificial Intelligence and Applications
+
+	Page - 175
+		We modelled the distribution of our optimistic heuristic after the distribution of Manhattan distance heuristic — a well-known optimistic heuristic for the 8-puzzle domain
+	
+
+#Article - Complete Solution of the Eight-Puzzle and the Benefit of Node Ordering in IDA*
+	Page - 2
+		There exist 9! possible tile permutations on a 3  3 board, and every second permutation is solvable [Johnson and Storey, 1879]. Hence, there is a total of 9!=2 = 181 440 solvable problem instances.
+	
+	page - 2
+		The tiles are almost reversely ordered in these configurations, resulting in long solution paths with many move transpositions 
+		
+		with information of this article
+	
+		int[][] tiles= {{ 8, 5, 6 }, { 7, 2, 3 }, { 4, 1, 9 }};//9 is empty cell;
+		public int[][] goalState = {{ 9, 1, 2 }, { 3, 4, 5 }, { 6, 7, 8 }};//state when end algoritm
+		Start Search
+		veces expandido 116421
+		Actions (literal values) [Arriba, Arriba, Izquierda, Izquierda, Abajo, Derecha, Arriba, Izquierda, Abajo, Abajo, Derecha, Arriba, Derecha, Abajo, Izquierda, Arriba, Arriba, Izquierda, Abajo, Abajo, Derecha, Arriba, Derecha, Arriba, Izquierda, Izquierda, Abajo, Derecha, Arriba, Izquierda]
+		Num actions 30
+		end Search
+		
+		se obtiene la misma cantidad de acciones, es decir el resultado es el mismo, obviamente computo varia
+		
+#Article - A Puzzle to Challenge Genetic Programming
+	Hamming codes are used for error detection and correction in coding theory [13]. For bit strings of length 2k −1we can detect single errors and correct them using Hamming codes...  Note each error word is a Hamming distance of 1 away from a code word, meaning that there is one bit in the vector that needs to be flipped to obtain a code word
+	
+# Article - PATTERN DATABASES
+	Since the 8-Puzzle has a maximal distance of 31 (manhattan) 
+	With the 8-Puzzle trivially solvable and any 15-Puzzle instance being solvable with a relatively small search,
+	we allow the tiles in the fringe targets to be temporarily disturbed in order to solve the 8-Subpuzzle (to solve 15 puzzle)
+
+	
+	
+Test -
+	estados
+	int[][] tiles= {{ 8, 5, 6 }, { 7, 2, 3 }, { 4, 1, 9 }};//9 is empty cell;
+	public int[][] goalState = {{ 1, 2, 3 }, { 4, 5, 6 }, { 7, 8, 9 }};//state when end algoritm
+	Con manhattan
+	Start Search
+	veces expandido 11302
+	Actions (literal values) [Arriba, Arriba, Izquierda, Abajo, Abajo, Derecha, Arriba, Arriba, Izquierda, Abajo, Abajo, Derecha, Arriba, Izquierda, Izquierda, Arriba, Derecha, Derecha, Abajo, Abajo, Izquierda, Arriba, Izquierda, Abajo, Derecha, Arriba, Derecha, Abajo]
+	Num actions 28
+	end Search
+
+	Con hamming
+	Start Search
+	veces expandido 73101
+	Actions (literal values) [Arriba, Arriba, Izquierda, Abajo, Abajo, Izquierda, Arriba, Derecha, Abajo, Derecha, Arriba, Arriba, Izquierda, Izquierda, Abajo, Derecha, Abajo, Derecha, Arriba, Izquierda, Arriba, Derecha, Abajo, Abajo, Izquierda, Arriba, Derecha, Abajo]
+	Num actions 28
+	end Search

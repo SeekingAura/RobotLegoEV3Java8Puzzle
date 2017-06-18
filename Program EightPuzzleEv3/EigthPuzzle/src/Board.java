@@ -5,7 +5,6 @@ import java.util.List;
 public class Board {
     public int[][] goalState = {{ 1, 2, 3 }, { 4, 5, 6 }, { 7, 8, 9 }};//state when end algoritm
     public int[][] tiles={{ 1, 2, 3 }, { 4, 5, 6 }, { 7, 8, 9 }};//temp state to solve
-	private boolean add;
     public Board(int[][] tiles){// build board from matrix 3x3
         this.tiles=tiles;
     }
@@ -655,7 +654,7 @@ public class Board {
         Graph g = new Graph(Heuristica);//new graph
         Node puzzNode = new Node(this);//first node (tree head, initial state)
         g.addNode(puzzNode);//add first node
-        int expandido=0;
+        long expandido=0;
         while(true){
             puzzNode.expanded=true;//set state in current node
             g.expand(puzzNode);
@@ -670,7 +669,7 @@ public class Board {
             }
             for(Node n : g.nodes){//check in tree is already solution and return tree
                 if(n.value.isGoal()){
-					//System.out.println("veces expandido "+expandido);
+					System.out.println("veces expandido "+expandido);
                     return g;
                 }
             }
