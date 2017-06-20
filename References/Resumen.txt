@@ -1,17 +1,16 @@
-#Book - Frontiers in Artificial Intelligence and Applications
-
-	Page - 175
-		We modelled the distribution of our optimistic heuristic after the distribution of Manhattan distance heuristic — a well-known optimistic heuristic for the 8-puzzle domain
+#Book - ECAI 2006: 17th European Conference on Artificial Intelligence
+	Pessimistic Heuristics Beat Optimistic Ones in Real-Time Search - Page - 149 - https://books.google.com.co/books?id=qNTvAgAAQBAJ&pg=PA148
+		Se conoce que la distribución para la heuristica de distnacia manhattan es la heuristica optima para el dominio del 8 puzzle
 	
 
-#Article - Complete Solution of the Eight-Puzzle and the Benefit of Node Ordering in IDA*
+#Article - Complete Solution of the Eight-Puzzle and the Benefit of Node Ordering in IDA* - https://www.ijcai.org/Proceedings/93-1/Papers/035.pdf - Reinfeld, A: Complete solution of the Eight-Puzzle and the benefit of node-ordering in IDA*. In: Procs. Int. Join Conf. on AI, Chambéry. Savoi, France. pp. 248-253 (1993)
 	Page - 2
-		There exist 9! possible tile permutations on a 3  3 board, and every second permutation is solvable [Johnson and Storey, 1879]. Hence, there is a total of 9!=2 = 181 440 solvable problem instances.
+		En el 8 puzzle existe 9! permutaciones posibles para un tablero de 3x3, y cada segunda permutación es solucionable [Johnson and Storey, 1879], por ende hay un total de 9!/2 = 181440 instnacias solucionables
 	
 	page - 2
-		The tiles are almost reversely ordered in these configurations, resulting in long solution paths with many move transpositions 
+		las celdas con un orden casi inversamente ordenados, su solución resulta ser de largos caminos, con muchas transpociones de movimiento
 		
-		with information of this article
+		Con la información de este articulo de un tablero de allí se prueba el programa
 	
 		int[][] tiles= {{ 8, 5, 6 }, { 7, 2, 3 }, { 4, 1, 9 }};//9 is empty cell;
 		public int[][] goalState = {{ 9, 1, 2 }, { 3, 4, 5 }, { 6, 7, 8 }};//state when end algoritm
@@ -21,17 +20,37 @@
 		Num actions 30
 		end Search
 		
-		se obtiene la misma cantidad de acciones, es decir el resultado es el mismo, obviamente computo varia
+		se obtiene la misma cantidad de acciones que indica el articulo para el tablero dado, es decir el resultado es el mismo, obviamente computo varia
 		
-#Article - A Puzzle to Challenge Genetic Programming
-	Hamming codes are used for error detection and correction in coding theory [13]. For bit strings of length 2k −1we can detect single errors and correct them using Hamming codes...  Note each error word is a Hamming distance of 1 away from a code word, meaning that there is one bit in the vector that needs to be flipped to obtain a code word
+#Article - A Puzzle to Challenge Genetic Programming - https://books.google.com.co/books?id=xzhuCQAAQBAJ&pg=PA238
+	codigo Hamming  es usado para la detección y correción en la teoria de codificación [R.W. Hamming. Coding and Information Theory. Prentice-Hall, Inc, New Jersey, USA, 1980.]... Nota: cada error en la palabra es una distancia de hamming 1 ya que está fuera del codigo de la palabra, esto indica que 1 bit en el vector necesita ser cambiado para obtener el codigo de correcto.
 	
-# Article - PATTERN DATABASES
-	Since the 8-Puzzle has a maximal distance of 31 (manhattan) 
-	With the 8-Puzzle trivially solvable and any 15-Puzzle instance being solvable with a relatively small search,
-	we allow the tiles in the fringe targets to be temporarily disturbed in order to solve the 8-Subpuzzle (to solve 15 puzzle)
+# Article - PATTERN DATABASES - http://onlinelibrary.wiley.com/doi/10.1111/0824-7935.00065/abstract
+	la distancia manhattan maxima en e 8 puzzle es de 31... con una solución tribial del 8 puzzle y cualquier instancia del 15 puzzle que se pueda resolver con una pequeña busqueda; el estado del 8 puzzle es un subpuzzle que funciona como estado temporal para llegar a parte de la solución del 15-puzzle
 
+# Book - Beginning Robotics Programming in Java with LEGO Mindstorms - https://books.google.com.co/books?id=ecSADQAAQBAJ&printsec=frontcover
+	Introducción de leJOS, es un sistema operativo de java, el cual es un lenguaje de codigo abierto creado para el desarrollo de software para los productos de Lego Mindstroms con java. Está tambien la guia de instalación del plugin, programa leJOS y JDK. Información sobre el A* (hace falta obtener el libro completo)
 	
+# Book - Artificial Intelligence: A Systems Approach: A Systems Approach - https://books.google.com.co/books?id=ekUHwvRP7nUC&pg=PA15
+	Busquedas informadas, son una evolución de las busquedas en las cuales se aplica algoritmos de busquedas con heuristicas, de esta manera dando un espacio filtrado de la busqueda, haciendo de este modo el algoritmo mas eficiente uno de ellos es A*.
+	busqueda A*, hace una busqueda en la cual en su espacio de busqueda evalua una función heuristica, este algoritmo usa tanto el costo dado requerido para ir desde el estado inicial hasta el estado que se está evaluando sumado con el valor de la función heuristica del nodo que se evalua. 
+
+# Book - Artificial Intelligence By Neeta Deshpande, Nanda Yadav - https://books.google.com.co/books?id=8meHRbczo4cC&pg=SA2-PA1
+	algoritmo A*: De un problema solucionable, se representa en un estado inicial con condiciones apropiadas y teniendo presente el estado solución. por cada acción realizada se genera los estados sucesores con los efectos de tal acción, este continua hasta que este genere el sucesor del estado solución. El A* hace este proceso de generar estados sucedores de cierta manera, siempre y cuando se este observando el sigueinte estado del procedimiento, A* da uso de una función heuristica la cual trata de escojer el mejor estado en el proceso de busqueda. Si la heuristica es buena  es buena no solo se encontrará rapido una solución si no que la solución será la mejor posible.
+	
+	1. El algoritmo posee 2 conjuntos:
+		* OPEN: son la lista de nodos que requieren ser examinados
+		* CLOSE: son la lista de nodos que ya han sido examinados
+	2. inicialmente los OPEN continen el estado inicial y los cerrados son vacios, cada n nodo contiene lo siguiente
+		* g(n): costo  para llegar desde el estado inicial hasta ese nodo n
+		* h(n): valor de heuristica del nodo respecto al nodo solución
+		* f(n) costo estimado de la mejor solución mediante el nodo n
+	3. Cada nodo contiene una referencia del padre, para asi si la mejor solución es encontrada pueda ser tomada. El ciclo principal del A* se repetirá en cada nodo, tomando n nodo con el valor f(n) menor de los nodos OPEN , si n es el estado solución termina el algoritmo y la solución es dada por backtracking desde n. De no ser el estado solución el nodo n es removido de OPEN y es agregado a CLOSE, seguido a esto se generarán todos los posibles nodos sucesores de n (expandir)
+	4. Por cada node sucesor de n si ya se encuentra CLOSE si la copia (de los expandidos) es de igual o menor valor f(n) estimado, este se puede descartar para nuevamente generar n y sobre-escribirlo. De forma similar si n ya existe en OPEN y la copia (de los expandidos) es igual o de menor valor f(n) a este se puede descartar y generar nuevamente a n para sobre-escribirlo
+	
+	
+Referencias pendientes:
+	https://books.google.com.co/books?id=mLoOwlem028C&pg=PA225
 	
 Test -
 	estados
