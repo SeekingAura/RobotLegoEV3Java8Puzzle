@@ -48,14 +48,21 @@
 	3. Cada nodo contiene una referencia del padre, para asi si la mejor solución es encontrada pueda ser tomada. El ciclo principal del A* se repetirá en cada nodo, tomando n nodo con el valor f(n) menor de los nodos OPEN , si n es el estado solución termina el algoritmo y la solución es dada por backtracking desde n. De no ser el estado solución el nodo n es removido de OPEN y es agregado a CLOSE, seguido a esto se generarán todos los posibles nodos sucesores de n (expandir)
 	4. Por cada node sucesor de n si ya se encuentra CLOSE si la copia (de los expandidos) es de igual o menor valor f(n) estimado, este se puede descartar para nuevamente generar n y sobre-escribirlo. De forma similar si n ya existe en OPEN y la copia (de los expandidos) es igual o de menor valor f(n) a este se puede descartar y generar nuevamente a n para sobre-escribirlo
 	
+# Book Desarrollo de Videojuegos: Desarrollo de Componentes - https://books.google.com.co/books?id=u2DABAAAQBAJ&pg=PA59
+	Page 58 - 8 puzzle: El 8 puzzle es un problema donde se tienen 8 piezas numeradas del 1 al 8 y un espacio sin pieza. Las piezas se pueden deslizar al espacio en blanco y asi cambiar la configuración del puzzle....  Si consideramos que de los cuatro movimientos posibles el costo de los movimientos hacia arriba e izquierda van a costar 2 unidades frente a la unidad de los movimientos abajo y derecha
 	
+# revista de ingenieria, Volumenes 63-64 - https://books.google.com.co/books?id=tWknAQAAMAAJ&dq=heuristica+para+8+puzzle&focus=searchwithinvolume&q=heuristica
+
+	Heuristica:	Para resolver problemas los que han adquirido experiencia han acumulado técnicas que les funcionan en diversos casos. A esstas técnicas generales se les llama heuristicas, estas tecnicas no ganrantizan que de un determinado problema quede resuelto al aplicarlo
+
 Referencias pendientes:
-	https://books.google.com.co/books?id=mLoOwlem028C&pg=PA225
+
 	
 Test -
 	estados
 	int[][] tiles= {{ 8, 5, 6 }, { 7, 2, 3 }, { 4, 1, 9 }};//9 is empty cell;
 	public int[][] goalState = {{ 1, 2, 3 }, { 4, 5, 6 }, { 7, 8, 9 }};//state when end algoritm
+	
 	Con manhattan
 	Start Search
 	veces expandido 11302
