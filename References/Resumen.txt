@@ -55,8 +55,18 @@
 
 	Heuristica:	Para resolver problemas los que han adquirido experiencia han acumulado técnicas que les funcionan en diversos casos. A esstas técnicas generales se les llama heuristicas, estas tecnicas no ganrantizan que de un determinado problema quede resuelto al aplicarlo
 
-Referencias pendientes:
+# EXACTLY HOW GOOD ARE HEURISTICS?: TOWARD A REALISTIC
+PREDICTIVE THEORY OF BEST-FIRST SEARCH - http://ai2-s2-pdfs.s3.amazonaws.com/447c/71af3c3b4f9cbfe7abe051e76297d37d2892.pdf
 
+	Cost, Quality and Error for 8-puzzle Heuristics: la busqueda con heuristica se supone que es mejor que busqueda en amplitud, pero ¿Cual es mejor? hace las heuristicas un salto exponencial mejor que la vusqueda en amplitud? se logra ver el número de nodos expandidos con según la profundidad requerida para alcanzar el estado solución en la Figura 1... se logra apreciar que todas las heuristicas del documento son mas optimas que la busqueda en amplitud sea
+	Kj/K1 el número de casillas que ocupa un tablero en una posición diferente al nodo solución (codigo hamming)
+	K2 la suma de las 8 casillas del minimo de movimiento requeridos para llegar a la posición requerida, sin tener presente las casillas que le bloqueen (distancia manhattan)
+	K3 es K2 + 3*seq(s) donde seq(s) cuenta 0 si no hay casilla en el centro (vacio en el centro) [verificar que es s], y por valor s será rotación hacia arriba sobre el perimetro del tablero, cada casilla que no esté en la casilla solución contará 2.
+
+	
+Referencias pendientes:
+https://books.google.com.co/books?id=HbEdAgAAQBAJ&printsec=frontcover
+https://books.google.com.co/books?id=H5j0L9rdLXIC&q=8+puzzle&dq=8+puzzle&hl=es-419&sa=X&redir_esc=y
 	
 Test -
 	estados
