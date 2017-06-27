@@ -58,16 +58,26 @@
 # EXACTLY HOW GOOD ARE HEURISTICS?: TOWARD A REALISTIC
 PREDICTIVE THEORY OF BEST-FIRST SEARCH - http://ai2-s2-pdfs.s3.amazonaws.com/447c/71af3c3b4f9cbfe7abe051e76297d37d2892.pdf
 
-	Cost, Quality and Error for 8-puzzle Heuristics: la busqueda con heuristica se supone que es mejor que busqueda en amplitud, pero ¿Cual es mejor? hace las heuristicas un salto exponencial mejor que la vusqueda en amplitud? se logra ver el número de nodos expandidos con según la profundidad requerida para alcanzar el estado solución en la Figura 1... se logra apreciar que todas las heuristicas del documento son mas optimas que la busqueda en amplitud sea
+	Cost, Quality and Error for 8-puzzle Heuristics: la busqueda con heuristica se supone que es mejor que busqueda en amplitud, pero ¿Cual es mejor? hace las heuristicas un salto exponencial mejor que la vusqueda en amplitud? se logra ver el número de nodos expandidos con según la profundidad requerida para alcanzar el estado solución en la Figura 1... se logra apreciar que todas las heuristicas del documento son mas optimas que la busqueda en amplitud sea con las siguientes heuristicas
 	Kj/K1 el número de casillas que ocupa un tablero en una posición diferente al nodo solución (codigo hamming)
 	K2 la suma de las 8 casillas del minimo de movimiento requeridos para llegar a la posición requerida, sin tener presente las casillas que le bloqueen (distancia manhattan)
-	K3 es K2 + 3*seq(s) donde seq(s) cuenta 0 si no hay casilla en el centro (vacio en el centro) [verificar que es s], y por valor s será rotación hacia arriba sobre el perimetro del tablero, cada casilla que no esté en la casilla solución contará 2.
+	K3 es K2 + 3*seq(s) donde seq(s) cuenta 0 si no hay casilla en el centro (vacio en el centro) [verificar que es s y que heuristica relaciona seq], y por valor s será rotación hacia arriba sobre el perimetro del tablero, cada casilla que no esté en la casilla solución contará 2. (distancia manhattan + 3*seq)
 
+# Information-Processing theory of Human Problem Solving - https://books.google.es/books?hl=es&lr=&id=GpTcAwAAQBAJ&oi=fnd&pg=PA271&dq=Information-Processing+theory+of+Human+Problem+Solving&ots=6FDRqbDct4&sig=ESSHcz6-0Y9e-LQhtLFqpvEB_to#v=onepage&q=Information-Processing%20theory%20of%20Human%20Problem%20Solving&f=false
+	Teoria general de resolución de problemas para el humano: La resolución de problemas es casi omnipresente en la actividad humana, la complejidad para cualquiera toma horas de nuestra vida si no lo hemos intentado en algun momento de nuestra vida. el dominio de estos problemas son de rangos altamente estructurados, asi tareas tipo puzzle normalmente se presentan en diferentes temas psicologicos del laboratorio Difuzo, se encontrará estructurado con diferentes situaciones de gran magnitud de la vida real.
+	Resolver varios problems requiere unicamente la información dque se encuentra en un problema explicito, con caracteristicas similares de los puzzles. Resolviendo otros problemas requiere elaborar y almacenar una gran cantidad de información en memoria o de manera externa con otros recusursos...
 	
+	el problema tipo puzzle que fue estudiado frecuentemente fue el problema de los misioneros y los canibales... (usado como ejemplo de ese tipo de problemas) otro es las torres de hannoi, en esos un problema basico el espacio requerido no es inmenso, aqui es donde la información dada por la persona es procesado y captable por el sistema o soportable a pequeños errores literales requiere encontrar soluciones...
+	
+	Solucionar de manera efectiva se obtiene de una extración de información de la estructura de las tareas del entorno y usar información bien selectiva por las busquedas heuriscas para soluciones
+	
+	(entidase puzzle a problema tipo rompecabezas)
+
 Referencias pendientes:
 https://books.google.com.co/books?id=HbEdAgAAQBAJ&printsec=frontcover
 https://books.google.com.co/books?id=H5j0L9rdLXIC&q=8+puzzle&dq=8+puzzle&hl=es-419&sa=X&redir_esc=y
-	
+http://www.aaai.org/Papers/AAAI/2008/AAAI08-056.pdf
+
 Test -
 	estados
 	int[][] tiles= {{ 8, 5, 6 }, { 7, 2, 3 }, { 4, 1, 9 }};//9 is empty cell;
