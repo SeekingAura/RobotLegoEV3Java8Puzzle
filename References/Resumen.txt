@@ -80,13 +80,29 @@ PREDICTIVE THEORY OF BEST-FIRST SEARCH - http://ai2-s2-pdfs.s3.amazonaws.com/447
 	
 	En un principio estas piezas sin clavos/empates parecia que con ellas no se podia alguna cosa sencilla, pero al dar uso de esta manera diferente de construir  se producian modelos livianos, solidos, bonitos...
 	
+	estas piezas clasicas tienen un número par de clavos/empates y un número impar de huecos (por ejemplo una pieza con 2 clavos/empates tiene 1 hueco, una pieza con 6 clavos/empates tiene 5 huecos), y su nombre y medida dado por su conteo de clavos/empates. Las piezas sin clavos / empates son una versión minimizada de las que tienen clavos/empates; la unión entre piezas sin clavos/empates es con otras piezas externas que cumplen esta función...
 	
+	Las piezas ev3 ocupan mucho menos espacio que las piezas del LEGO clasico, estas piezas ev3 cada una posee un nombre, y podrian categorizarse en:
+		* beams: vigas rectas, vigas angulo recto, vigas de angulo obtuso
+		* connectos: los conectores, pines, agarradera, bloques cruzados
+		* gears: engranaje de soporte, engranaje angular, engranaje de arrastre
+		* wheels and treads: Ruedas, bandas de rodamiento / orugas, llanta
+		* decorative pieces: paneles, dientes, espadas entre otras
+		* miscellanous pieces: pelotas, pelotas de la revista, pelota de disparo, banda de goma
+		* electronic pieces: ev3 brick, motores, sensores, cableado
+	
+	estas categorias son dadas por el autor del libro para tener facilidad de recordarlas.
+	
+# LEGO® MINDSTORMS EV3 and LEGO® Engineering Conference -https://community.education.lego.com/legodev/attachments/legodev/LE_LessonPlanLibrary_TKB/17/1/LEGO%20EV3%20lo-res.pdf
+	Información sobre robot arm H25 del paquete education
+	
+
 	
 Referencias pendientes:
 
 https://books.google.com.co/books?id=H5j0L9rdLXIC&q=8+puzzle&dq=8+puzzle&hl=es-419&sa=X&redir_esc=y
 http://www.aaai.org/Papers/AAAI/2008/AAAI08-056.pdf
-
+https://books.google.es/books?hl=es&lr=&id=paIQAwAAQBAJ&oi=fnd&pg=PR18&dq=45544+robotarmh25&ots=HRrn962uxC&sig=ImJbii9MF2Ug7fut-NFUp2H8Y9Y#v=onepage&q=robot%20arm&f=false
 Test -
 	estados
 	int[][] tiles= {{ 8, 5, 6 }, { 7, 2, 3 }, { 4, 1, 9 }};//9 is empty cell;
