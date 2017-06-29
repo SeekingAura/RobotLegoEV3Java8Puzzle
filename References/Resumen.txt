@@ -1,11 +1,11 @@
-#Book - ECAI 2006: 17th European Conference on Artificial Intelligence
+# Book - ECAI 2006: 17th European Conference on Artificial Intelligence
 	Pessimistic Heuristics Beat Optimistic Ones in Real-Time Search - Page - 149 - https://books.google.com.co/books?id=qNTvAgAAQBAJ&pg=PA148
-		Se conoce que la distribución para la heuristica de distnacia manhattan es la heuristica optima para el dominio del 8 puzzle
+		Se conoce que la distribución para la heuristica de distancia manhattan es la heuristica optima para el dominio del 8 puzzle
 	
 
-#Article - Complete Solution of the Eight-Puzzle and the Benefit of Node Ordering in IDA* - https://www.ijcai.org/Proceedings/93-1/Papers/035.pdf - Reinfeld, A: Complete solution of the Eight-Puzzle and the benefit of node-ordering in IDA*. In: Procs. Int. Join Conf. on AI, Chambéry. Savoi, France. pp. 248-253 (1993)
+# Article - Complete Solution of the Eight-Puzzle and the Benefit of Node Ordering in IDA* - https://www.ijcai.org/Proceedings/93-1/Papers/035.pdf - Reinfeld, A: Complete solution of the Eight-Puzzle and the benefit of node-ordering in IDA*. In: Procs. Int. Join Conf. on AI, Chambéry. Savoi, France. pp. 248-253 (1993)
 	Page - 2
-		En el 8 puzzle existe 9! permutaciones posibles para un tablero de 3x3, y cada segunda permutación es solucionable [Johnson and Storey, 1879], por ende hay un total de 9!/2 = 181440 instnacias solucionables
+		En el 8 puzzle existe 9! permutaciones posibles para un tablero de 3x3, y cada segunda permutación es solucionable [Johnson and Storey, 1879], por ende hay un total de 9!/2 = 181440 instancias solucionables
 	
 	page - 2
 		las celdas con un orden casi inversamente ordenados, su solución resulta ser de largos caminos, con muchas transpociones de movimiento
@@ -22,7 +22,7 @@
 		
 		se obtiene la misma cantidad de acciones que indica el articulo para el tablero dado, es decir el resultado es el mismo, obviamente computo varia
 		
-#Article - A Puzzle to Challenge Genetic Programming - https://books.google.com.co/books?id=xzhuCQAAQBAJ&pg=PA238
+# Article - A Puzzle to Challenge Genetic Programming - https://books.google.com.co/books?id=xzhuCQAAQBAJ&pg=PA238
 	codigo Hamming  es usado para la detección y correción en la teoria de codificación [R.W. Hamming. Coding and Information Theory. Prentice-Hall, Inc, New Jersey, USA, 1980.]... Nota: cada error en la palabra es una distancia de hamming 1 ya que está fuera del codigo de la palabra, esto indica que 1 bit en el vector necesita ser cambiado para obtener el codigo de correcto.
 	
 # Article - PATTERN DATABASES - http://onlinelibrary.wiley.com/doi/10.1111/0824-7935.00065/abstract
@@ -69,12 +69,21 @@ PREDICTIVE THEORY OF BEST-FIRST SEARCH - http://ai2-s2-pdfs.s3.amazonaws.com/447
 	
 	el problema tipo puzzle que fue estudiado frecuentemente fue el problema de los misioneros y los canibales... (usado como ejemplo de ese tipo de problemas) otro es las torres de hannoi, en esos un problema basico el espacio requerido no es inmenso, aqui es donde la información dada por la persona es procesado y captable por el sistema o soportable a pequeños errores literales requiere encontrar soluciones...
 	
-	Solucionar de manera efectiva se obtiene de una extración de información de la estructura de las tareas del entorno y usar información bien selectiva por las busquedas heuriscas para soluciones
+	Solucionar de manera efectiva se obtiene de una extracción de información de la estructura de las tareas del entorno y usar información bien selectiva por las busquedas heuriscas para soluciones
 	
 	(entidase puzzle a problema tipo rompecabezas)
 
+# About LEGO EV3 - https://books.google.com.co/books?id=HbEdAgAAQBAJ&printsec=frontcover
+	La construcción sin clavar, sin empatar, sin clavos (lo que sobre sale de las piezas LEGO standar)[evolución LEGO]: Como todos saben, estos no son piezas clasicas de LEGO que están en el paquete EV3, y las piezas no tienen ningún clavo o forma de empatar, entonces ¿Como conectamos esto?
+	
+	para el 2000, LEGO su técnica se ha compuesto principalmente de partes sin empates/clavos. La antigua y buena técnica de bordes finos/afilados con empates/clavos fueron reemplzados de a poco por algo mas liso/suave, la técnologia de piezas sin clavos/empates/taches, se adquieren piezas que se ven más elegantes...
+	
+	En un principio estas piezas sin clavos/empates parecia que con ellas no se podia alguna cosa sencilla, pero al dar uso de esta manera diferente de construir  se producian modelos livianos, solidos, bonitos...
+	
+	
+	
 Referencias pendientes:
-https://books.google.com.co/books?id=HbEdAgAAQBAJ&printsec=frontcover
+
 https://books.google.com.co/books?id=H5j0L9rdLXIC&q=8+puzzle&dq=8+puzzle&hl=es-419&sa=X&redir_esc=y
 http://www.aaai.org/Papers/AAAI/2008/AAAI08-056.pdf
 
