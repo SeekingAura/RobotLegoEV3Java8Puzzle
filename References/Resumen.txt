@@ -28,9 +28,37 @@
 # Article - PATTERN DATABASES - http://onlinelibrary.wiley.com/doi/10.1111/0824-7935.00065/abstract
 	la distancia manhattan maxima en e 8 puzzle es de 31... con una solución tribial del 8 puzzle y cualquier instancia del 15 puzzle que se pueda resolver con una pequeña busqueda; el estado del 8 puzzle es un subpuzzle que funciona como estado temporal para llegar a parte de la solución del 15-puzzle
 
-# Book - Beginning Robotics Programming in Java with LEGO Mindstorms - https://books.google.com.co/books?id=ecSADQAAQBAJ&printsec=frontcover
-	Introducción de leJOS, es un sistema operativo de java, el cual es un lenguaje de codigo abierto creado para el desarrollo de software para los productos de Lego Mindstroms con java. Está tambien la guia de instalación del plugin, programa leJOS y JDK. Información sobre el A* (hace falta obtener el libro completo)
+# Book - Beginning Robotics Programming in Java with LEGO Mindstorms - https://books.google.com.co/books?id=ecSADQAAQBAJ&printsec=frontcover - https://link.springer.com/content/pdf/10.1007%2F978-1-4842-2005-4.pdf
+	Introducción de leJOS, es un sistema operativo de java, el cual es un lenguaje de codigo abierto creado para el desarrollo de software para los productos de Lego Mindstroms con java. Está tambien la guia de instalación del plugin, programa leJOS y JDK. Información sobre el A* busquedas iformadas y codigos de ejemplo de LeJos...
 	
+	Chapter 11 - page 194: El sensor de luz capta la intensidad de luz capturada por los lentes y este ejecuta ciertas funcionalidades, desde el punto de la luz emitida por el sensor hacia abajo, el robot podria seguir una linea negra o alguna linea de cualquier color (Detección de presencia de objetos)...
+	
+	Page 195: El sensor de color puede ser usado par ala detección de diferentes colores, el sensor emite una luz roja, azul o verde de sus led's multicolor que están en el sensor. Con la implementación de ColorDetector interface (Codigo), el sensor de color puede leer e identificar el color que se encuentra allí sea con funciones que tienen valores por defecto de lo que es un color o un estimado del mismo o ver su valor RGB (sensing color) con el siguiente codigo tnato NXT como EV3.
+	
+	/**
+	* Demonstrate color sensing
+	*
+	* @throws UnsupportedSensorException
+	* Thrown if _colorPort does not specify a valid
+	* color sending
+	* port
+	*/
+	private static void runColorSenseDemo() throws UnsupportedSensorException {
+		LCD. drawString("Press to begin…", 0, 0);
+		Button. waitForPress();
+		SensorControlsControl = new SensorControl ( null, null, _colorPort, null);
+		while (!Button. ESCAPE.isPressed()) {
+			ColorStructcvalue = sControl.getSensedColor();
+			Color cv = sControl.getRGBColor();
+			LCD. clear();
+			LCD. drawString("Color: " + cvalue, 0, 0);
+			LCD. drawString("Sensed:", 0, 1);
+			LCD. drawString(
+			cv.getRed() + " " + cv.getGreen() + " " +
+			cv.getBlue(), 0,2);
+		}
+	} 
+	y ejemplos e ideas sobre como programar y usar el sensor de color...
 # Book - Artificial Intelligence: A Systems Approach: A Systems Approach - https://books.google.com.co/books?id=ekUHwvRP7nUC&pg=PA15
 	Busquedas informadas, son una evolución de las busquedas en las cuales se aplica algoritmos de busquedas con heuristicas, de esta manera dando un espacio filtrado de la busqueda, haciendo de este modo el algoritmo mas eficiente uno de ellos es A*.
 	busqueda A*, hace una busqueda en la cual en su espacio de busqueda evalua una función heuristica, este algoritmo usa tanto el costo dado requerido para ir desde el estado inicial hasta el estado que se está evaluando sumado con el valor de la función heuristica del nodo que se evalua. 
@@ -96,7 +124,17 @@ PREDICTIVE THEORY OF BEST-FIRST SEARCH - http://ai2-s2-pdfs.s3.amazonaws.com/447
 # LEGO® MINDSTORMS EV3 and LEGO® Engineering Conference -https://community.education.lego.com/legodev/attachments/legodev/LE_LessonPlanLibrary_TKB/17/1/LEGO%20EV3%20lo-res.pdf
 	Información sobre robot arm H25 del paquete education
 	
-
+# RGB Calibration for Color Image Analysis in Machine Vision - http://ieeexplore.ieee.org/abstract/document/536890/
+	A model of RGB Errors: El espectro reflectante de un objeto, es la atenuación espectral de la luz reflectada del objeto donde un lente filtra el color; se tiene presente un valor de transmitancia espectral del filtro de color y una sensibilidad espectral de imagen (al objeto) del sensor, ademas de corrección gamma, intercepto relativo a lo oscuro actual...
+	
+	Los valores de RGB que se pueden obtener de una imagen / objeto se pueden obtener varios errores por componentes del sistema (medio, ambiente), los errores de RGB pueden provenir de varias partes, por ejemplo:
+	* Cambio en la intensidad de la luz
+	* Cambio en la temperatura luminica
+	* oscuridad actual debido al gasto termico (sobrecalentamiento) del sensor
+	* variación en la transmitancia espectral de los filtros de color en el tiempo...
+	
+	
+	
 	
 Referencias pendientes:
 
