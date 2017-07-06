@@ -133,14 +133,20 @@ PREDICTIVE THEORY OF BEST-FIRST SEARCH - http://ai2-s2-pdfs.s3.amazonaws.com/447
 	* oscuridad actual debido al gasto termico (sobrecalentamiento) del sensor
 	* variación en la transmitancia espectral de los filtros de color en el tiempo...
 	
+Where the Really Hard Problems Are - http://www.dcs.gla.ac.uk/~pat/cpM/papers/cheeseman91where.pdf	
+
+	Page 2 - En la importancia de Las transiciones de fase o secuencias de solución para inteligencia aritificial se cree que los sistemas complejos estan compuestos por varios valores interactivos que se pueden entender de manera frecuente en un nivel macroscopico, en terminos de ordenar pocos parametos que caracterizan a todo el sistema. Las propiedades de un sistema complejo se pueden encontrar como una serie de parametros de una rutina con estadisticas mecanizadas. Esto es posible debiado a un gran numero de interacticiones locales que pueden producir un comportamiento dramaticamente cordinado a nivel macroscopico, asi como las transiciones de fase, lo cual esto no depende de interacciones detalladas con el sistema. Algunos ejemplos de esto en Inteligencia artificial son.
 	
-	
+		* Hamilton Circuits 
+		* Graph Coloring 
+		* K-Satisfyability 
 	
 Referencias pendientes:
 
 https://books.google.com.co/books?id=H5j0L9rdLXIC&q=8+puzzle&dq=8+puzzle&hl=es-419&sa=X&redir_esc=y
 http://www.aaai.org/Papers/AAAI/2008/AAAI08-056.pdf
 https://books.google.es/books?hl=es&lr=&id=paIQAwAAQBAJ&oi=fnd&pg=PR18&dq=45544+robotarmh25&ots=HRrn962uxC&sig=ImJbii9MF2Ug7fut-NFUp2H8Y9Y#v=onepage&q=robot%20arm&f=false
+
 Test -
 	estados
 	int[][] tiles= {{ 8, 5, 6 }, { 7, 2, 3 }, { 4, 1, 9 }};//9 is empty cell;
