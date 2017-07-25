@@ -141,11 +141,15 @@ Where the Really Hard Problems Are - http://www.dcs.gla.ac.uk/~pat/cpM/papers/ch
 		* Graph Coloring 
 		* K-Satisfyability 
 	
+Performance Measurement and Analysis of Certain Search Algorithms - http://www.dtic.mil/docs/citations/ADA286363
+	De varias situaciones aleatorias, se puede encontrar muchas instancias con diferentes propiedades se puede  obtener una formula con varias predicciones de sus parametros (comportamiento) distingida por cada problema y algoritmo. en contraste con un simple algoritmo de ordenamiento, Por ejemplo el A* no es un Algoritmo arreglado mas bien es un algoritmo con un esquema parametrizado por medio de una "función heuristica de estimación de distancia" lo cual saca el mejor de cada estado o momento del A*
+
 Referencias pendientes:
 
 https://books.google.com.co/books?id=H5j0L9rdLXIC&q=8+puzzle&dq=8+puzzle&hl=es-419&sa=X&redir_esc=y
 http://www.aaai.org/Papers/AAAI/2008/AAAI08-056.pdf
 https://books.google.es/books?hl=es&lr=&id=paIQAwAAQBAJ&oi=fnd&pg=PR18&dq=45544+robotarmh25&ots=HRrn962uxC&sig=ImJbii9MF2Ug7fut-NFUp2H8Y9Y#v=onepage&q=robot%20arm&f=false
+
 
 Test -
 	estados
