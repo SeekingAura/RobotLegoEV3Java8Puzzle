@@ -40,7 +40,8 @@ public class MainRobot {
 	//control values
 	public static boolean tengoObjeto = false;
 	public static int posActual=0;
-	public static int[][] vacio= {{0, 0, 0}, {0, 0, 0}, { 0, 0, 0}};//Clean board
+	//public static int[][] vacio= {{0, 0, 0}, {0, 0, 0}, { 0, 0, 0}};//Clean board
+	public static int[][] vacio= {{ 1, 2, 3 }, { 4, 5, 6 }, { 7, 9, 8 }};//Clean board
 	//initial puzzle object
 	public static Board puzz = new Board(vacio);
 	
@@ -66,7 +67,7 @@ public class MainRobot {
 		moverRobot("arriba");//a good distance up
 		Delay.msDelay(3000);
 		//set claw in initial position
-		m2.rotate(70);//close claw
+		moverRobot("cerrar");//close claw
 		Delay.msDelay(2000);
 		moverRobot("abrir");//open claw
 		
@@ -103,23 +104,27 @@ public class MainRobot {
 			if(key==16){//Button Left
 				System.out.println("---Indique posicion---");
 				pos=1;
-				
+				System.out.println("posicion "+pos);
 				while(key!=2){//waiting for receive position (end with middle button)
-					System.out.println("posicion "+pos);
+					
 					key=keys.waitForAnyEvent();
 					if(key==16){//Button Left
+						
 						if((pos-1)<1){
-							pos=1;
+							pos=9;
 						}else{
 							pos--;
 						}
+						System.out.println("posicion "+pos);
 					}
 					if(key==8){
+						
 						if((pos+1)>9){
-							pos=9;
+							pos=1;
 						}else{
 							pos++;
 						}
+						System.out.println("posicion "+pos);
 					}
 					
 				}
@@ -350,17 +355,19 @@ public class MainRobot {
 	}
 	
 	private static void moverRobot(String sentido) {
+		
 		if(sentido=="arriba"){//up
-			m4.rotate(-265, true);
+			m4.rotate(-235
+					, true);
 		}
 		if(sentido=="abajo"){//down
-			m4.rotate(265, true);
+			m4.rotate(235, true);
 		}
 		if(sentido=="cerrar"){//close claw
-			m2.rotate(70, true);
+			m2.rotate(120, true);
 		}
 		if(sentido=="abrir"){//open claw
-			m2.rotate(-70);
+			m2.rotate(-120);
 		}
 		
 		if(sentido=="tomar"){//take cell

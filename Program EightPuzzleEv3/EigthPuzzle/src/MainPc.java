@@ -19,7 +19,7 @@ public class MainPc {
 		
 			//long startTime = CPUUtils.getSystemTime();
 			long startTime = System.nanoTime();
-			int[][] tiles= {{ 8, 5, 6 }, { 7, 2, 3 }, { 4, 1, 9 }};//9 is empty cell;
+			int[][] tiles= {{ 1, 2, 3 }, { 4, 5, 6 }, { 7, 9, 8 }};//9 is empty cell;
 		       
 		       Board puzz = new Board(tiles);       
 		       List<Integer> actions;
